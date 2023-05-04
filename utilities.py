@@ -37,7 +37,10 @@ def total_lum(ini_masses, s_mets, ages, los, kappa,
     model.create_Lnu_grid(
         F)  # --- create new L grid for each filter. In units of erg/s/Hz
 
-    los = DTM_fit(s_mets, ages) * los
+    part_dtm = np.zeros(len(ages))
+    for ind in range(len(ages)):
+        part_dtm[ind] = DTM_fit(s_mets[ind], ages[ind])
+    los = part_dtm * los
 
     # --- calculate V-band (550nm) optical depth for each star particle
     tauVs_ISM = kappa * los

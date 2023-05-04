@@ -188,6 +188,7 @@ ax3 = fig.add_subplot(223)
 ax4 = fig.add_subplot(224)
 
 # Plot images
+print(subfind_img.min(), subfind_img.max())
 ax1.imshow(grp_mass_img, norm=mpl.colors.LogNorm)
 ax2.imshow(grp_lum_img, norm=mpl.colors.LogNorm)
 ax3.imshow(subfind_img)

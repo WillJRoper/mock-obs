@@ -72,7 +72,7 @@ grp_ages = []
 grp_los = []
 subgrp_start = []
 subgrp_length = []
-for (ind, start), length in zip(grp_s_begin, grp_s_length):
+for (ind, start), length in zip(enumerate(grp_s_begin), grp_s_length):
     print(start, length)
     subgroup_start.append(len(grp_los))
     subgroup_length.append(length)

@@ -34,8 +34,9 @@ z_str = snap.split('z')[1].split('p')
 z = float(z_str[0] + '.' + z_str[1])
 
 # Define image properties
-resolution = 0.031 / cosmo.arcsec_per_kpc_proper(z).value * kpc
-width = 500 * kpc
+resolution = 10 * 0.031 / cosmo.arcsec_per_kpc_proper(z).value * kpc
+width = 200 * kpc
+print("Making images with %.2f kpc resolution and a %.2f FOV")
 
 # Define the path to the data
 datapath = "/cosma7/data/dp004/dc-payy1/my_files/flares_pipeline/data/" \
@@ -49,7 +50,7 @@ subgrps = reg_snap_grp["Galaxy"]["SubGroupNumber"][...]
 s_length = reg_snap_grp["Galaxy"]["S_Length"][...]
 s_begin = np.zeros(len(s_length), dtype=int)
 s_begin[1:] = np.cumsum(s_length[:-1])
-pos = reg_snap_grp["Particle"]["S_Coordinates"][...].T
+pos = reg_snap_grp["Particle"]["S_Coordinates"][...].T / (1 + z)
 s_mass = reg_snap_grp["Particle"]["S_Mass"][...]
 ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...]
 s_mets = reg_snap_grp["Particle"]["S_Z"][...]

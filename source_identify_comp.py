@@ -188,8 +188,8 @@ ax3 = fig.add_subplot(223)
 ax4 = fig.add_subplot(224)
 
 # Plot images
-ax1.imshow(grp_mass_img)
-ax2.imshow(grp_lum_img)
+ax1.imshow(grp_mass_img, norm=mpl.colors.LogNorm)
+ax2.imshow(grp_lum_img, norm=mpl.colors.LogNorm)
 ax3.imshow(subfind_img)
 
 fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),

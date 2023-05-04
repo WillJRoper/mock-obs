@@ -11,6 +11,8 @@ from synthesizer.kernel_functions import quintic
 
 from utilities import total_lum
 
+from unyt import kpc, erg, s, Hz, Msun
+
 
 # Which group and snapshot are we doing?
 group_id = int(sys.argv[1])
@@ -32,8 +34,8 @@ z_str = snap.split('z')[1].split('p')
 z = float(z_str[0] + '.' + z_str[1])
 
 # Define image properties
-resolution = 0.031 / cosmo.arcsec_per_kpc_proper(z).value
-width = 500
+resolution = 0.031 / cosmo.arcsec_per_kpc_proper(z).value * kpc
+width = 500 * kpc
 
 # Define the path to the data
 datapath = "/cosma7/data/dp004/dc-payy1/my_files/flares_pipeline/data/" \
@@ -110,9 +112,9 @@ grp_lum_obj = ParticleImage(
     resolution,
     fov=width,
     cosmo=cosmo,
-    positions=grp_pos,
-    pixel_values=lums,
-    smoothing_lengths=grp_smls,
+    positions=grp_pos * Mpc,
+    pixel_values=lums * erg / s / Hz,
+    smoothing_lengths=grp_smls * Mpc,
     centre=centre
 )
 grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
@@ -122,9 +124,9 @@ grp_mass_obj = ParticleImage(
     resolution,
     fov=width,
     cosmo=cosmo,
-    positions=grp_pos,
-    pixel_values=grp_s_mass,
-    smoothing_lengths=grp_smls,
+    positions=grp_pos * Mpc,
+    pixel_values=grp_s_mass * Msun,
+    smoothing_lengths=grp_smls * Mpc,
     centre=centre
 )
 grp_mass_img = grp_mass_obj.get_smoothed_img(quintic)
@@ -147,9 +149,9 @@ for start, length in zip(subgrp_start, subgrp_length):
         resolution,
         fov=width,
         cosmo=cosmo,
-        positions=grp_pos[start: start + length, :],
-        pixel_values=grp_s_mass[start: start + length],
-        smoothing_lengths=grp_smls[start: start + length],
+        positions=grp_pos[start: start + length, :] * Mpc,
+        pixel_values=grp_s_mass[start: start + length] * Msun,
+        smoothing_lengths=grp_smls[start: start + length] * Mpc,
         centre=centre
     )
     subgrp_mass_img = subgrp_mass_obj.get_smoothed_img(quintic)

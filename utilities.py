@@ -20,7 +20,7 @@ def DTM_fit(Z, Age):
 
 def total_lum(ini_masses, s_mets, ages, los, kappa,
               BC_fac, IMF='Chabrier_300',
-              filters=('JWST.NIRCam.F150W',), log10t_BC=7.):
+              filters=('JWST.NIRCAM.F150W',), log10t_BC=7.):
 
     model = models.define_model(
         F'BPASSv2.2.1.binary/{IMF}')  # DEFINE SED GRID -

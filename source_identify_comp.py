@@ -53,11 +53,11 @@ ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...]
 s_mets = reg_snap_grp["Particle"]["S_Z"][...]
 ages = reg_snap_grp["Particle"]["S_Age"][...]
 los = reg_snap_grp["Particle"]["S_los"][...]
+smls =reg_snap_grp["Particle"]["S_sml"][...]
 
 print("Got data...")
 
 # Extract this groups data
-print(grps[0], group_id)
 okinds = grps == group_id
 grp_subgrps = subgrps[okinds]
 grp_s_length = s_length[okinds]
@@ -70,6 +70,7 @@ grp_ini_masses = []
 grp_s_mets = []
 grp_ages = []
 grp_los = []
+grp_smls = []
 subgrp_start = []
 subgrp_length = []
 for (ind, start), length in zip(enumerate(grp_s_begin), grp_s_length):
@@ -82,18 +83,20 @@ for (ind, start), length in zip(enumerate(grp_s_begin), grp_s_length):
     grp_s_mets.extend(s_mets[start: start + length])
     grp_ages.extend(ages[start: start + length])
     grp_los.extend(los[start: start + length])
+    grp_smls.extend(smls[start: start + length])
 grp_pos = np.array(grp_pos)
 grp_s_mass = np.array(grp_s_mass)
 grp_ini_masses = np.array(grp_ini_masses)
 grp_s_mets = np.array(grp_s_mets)
 grp_ages = np.array(grp_ages)
 grp_los = np.array(grp_los)
+grp_smls = np.array(grp_smls)
 subgrp_start = np.array(subgrp_start)
 subgrp_length = np.array(subgrp_length)
 
 # Calculate the geometric centre of the group
 centre = np.mean(grp_pos, axis=1)
-print(centre)
+
 print("Got the group data with %d particles" % len(grp_los))
 
 # Compute luminosities for this group
@@ -107,9 +110,9 @@ grp_lum_obj = ParticleImage(
     resolution,
     fov=width,
     cosmo=cosmo,
-    positions=pos,
+    positions=grp_pos,
     pixel_values=lums,
-    smoothing_lengths=smls,
+    smoothing_lengths=grp_smls,
     centre=centre
 )
 grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
@@ -119,9 +122,9 @@ grp_mass_obj = ParticleImage(
     resolution,
     fov=width,
     cosmo=cosmo,
-    positions=pos,
-    pixel_values=masses,
-    smoothing_lengths=smls,
+    positions=grp_pos,
+    pixel_values=grp_s_mass,
+    smoothing_lengths=grp_smls,
     centre=centre
 )
 grp_mass_img = grp_mass_obj.get_smoothed_img(quintic)
@@ -144,9 +147,9 @@ for start, length in zip(subgrp_start, subgrp_length):
         resolution,
         fov=width,
         cosmo=cosmo,
-        positions=pos,
-        pixel_values=masses,
-        smoothing_lengths=smls,
+        positions=grp_pos[start: start + length, :],
+        pixel_values=grp_s_mass[start: start + length],
+        smoothing_lengths=grp_smls[start: start + length],
         centre=centre
     )
     subgrp_mass_img = subgrp_mass_obj.get_smoothed_img(quintic)

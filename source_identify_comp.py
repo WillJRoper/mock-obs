@@ -51,8 +51,8 @@ s_length = reg_snap_grp["Galaxy"]["S_Length"][...]
 s_begin = np.zeros(len(s_length), dtype=int)
 s_begin[1:] = np.cumsum(s_length[:-1])
 pos = reg_snap_grp["Particle"]["S_Coordinates"][...].T / (1 + z)
-s_mass = reg_snap_grp["Particle"]["S_Mass"][...]
-ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...]
+s_mass = reg_snap_grp["Particle"]["S_Mass"][...] * 10 ** 10
+ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...] * 10 ** 10
 s_mets = reg_snap_grp["Particle"]["S_Z"][...]
 ages = reg_snap_grp["Particle"]["S_Age"][...]
 los = reg_snap_grp["Particle"]["S_los"][...]
@@ -95,9 +95,6 @@ grp_los = np.array(grp_los)
 grp_smls = np.array(grp_smls)
 subgrp_start = np.array(subgrp_start)
 subgrp_length = np.array(subgrp_length)
-
-print(grp_pos)
-print(grp_smls)
 
 # Calculate the geometric centre of the group
 centre = np.mean(grp_pos, axis=0)
@@ -188,8 +185,12 @@ ax3 = fig.add_subplot(223)
 ax4 = fig.add_subplot(224)
 
 # Plot images
-ax1.imshow(grp_mass_img, norm=mpl.colors.LogNorm())
-ax2.imshow(grp_lum_img, norm=mpl.colors.LogNorm())
+ax1.imshow(grp_mass_img,
+           norm=mpl.colors.Normalize(vmin=np.percentile(grp_mass_img, 32),
+                                     vmax=np.percentile(grp_mass_img, 95)))
+ax2.imshow(grp_lum_img,
+           norm=mpl.colors.Normalize(vmin=np.percentile(grp_lum_img, 32),
+                                     vmax=np.percentile(grp_lum_img, 95)))
 ax3.imshow(subfind_img)
 
 fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),

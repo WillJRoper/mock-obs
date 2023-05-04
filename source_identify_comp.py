@@ -192,7 +192,7 @@ ax1.imshow(grp_mass_img)
 ax2.imshow(grp_lum_img)
 ax3.imshow(subfind_img)
 
-fig.savefig("plots/source_ident_comp_%s_%d_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100)
 plt.close(fig)
 

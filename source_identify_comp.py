@@ -11,7 +11,7 @@ from synthesizer.kernel_functions import quintic
 
 from utilities import total_lum
 
-from unyt import kpc, erg, s, Hz, Msun
+from unyt import kpc, erg, s, Hz, Msun, Mpc
 
 
 # Which group and snapshot are we doing?

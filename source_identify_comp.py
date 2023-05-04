@@ -57,6 +57,7 @@ los = reg_snap_grp["Particle"]["S_los"][...]
 print("Got data...")
 
 # Extract this groups data
+print(grps[0], group_id)
 okinds = grps == group_id
 grp_subgrps = subgrps[okinds]
 grp_s_length = s_length[okinds]
@@ -72,9 +73,10 @@ grp_los = []
 subgrp_start = []
 subgrp_length = []
 for (ind, start), length in zip(grp_s_begin, grp_s_length):
+    print(start, length)
     subgroup_start.append(len(grp_los))
     subgroup_length.append(length)
-    grp_pos.extend(pos[start: start + length])
+    grp_pos.extend(pos[start: start + length, :])
     grp_s_mass.extend(s_mass[start: start + length])
     grp_ini_masses.extend(ini_masses[start: start + length])
     grp_s_mets.extend(s_mets[start: start + length])
@@ -91,7 +93,7 @@ subgrp_length = np.array(subgrp_length)
 
 # Calculate the geometric centre of the group
 centre = np.mean(grp_pos, axis=0)
-
+print(centre)
 print("Got the group data with %d particles" % len(grp_los))
 
 # Compute luminosities for this group

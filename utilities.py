@@ -44,6 +44,7 @@ def total_lum(ini_masses, s_mets, ages, los, kappa,
     tauVs_BC = BC_fac * (s_mets / 0.01)
     fesc = 0.0
     for f in filters:
+        print(F)
         print(f)
         Lnu = models.generate_Lnu_array(model, ini_masses, ages, s_mets,
                                         tauVs_ISM, tauVs_BC, F, f,

@@ -97,6 +97,9 @@ grp_smls = np.array(grp_smls)
 subgrp_start = np.array(subgrp_start)
 subgrp_length = np.array(subgrp_length)
 
+print(grp_pos)
+print(grp_smls)
+
 # Calculate the geometric centre of the group
 centre = np.mean(grp_pos, axis=0)
 

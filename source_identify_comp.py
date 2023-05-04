@@ -45,7 +45,7 @@ reg_snap_grp = hdf[reg][snap]
 grps = reg_snap_grp["Galaxy"]["GroupNumber"][...]
 subgrps = reg_snap_grp["Galaxy"]["SubGroupNumber"][...]
 s_length = reg_snap_grp["Galaxy"]["S_Length"][...]
-s_begin = np.zeros(len(s_length))
+s_begin = np.zeros(len(s_length), dtype=int)
 s_begin[1:] = np.cumsum(s_length[:-1])
 pos = reg_snap_grp["Particle"]["S_Coordinates"][...]
 s_mass = reg_snap_grp["Particle"]["S_Mass"][...]
@@ -74,8 +74,8 @@ subgrp_start = []
 subgrp_length = []
 for (ind, start), length in zip(enumerate(grp_s_begin), grp_s_length):
     print(start, length)
-    subgroup_start.append(len(grp_los))
-    subgroup_length.append(length)
+    subgrp_start.append(len(grp_los))
+    subgrp_length.append(length)
     grp_pos.extend(pos[start: start + length, :])
     grp_s_mass.extend(s_mass[start: start + length])
     grp_ini_masses.extend(ini_masses[start: start + length])

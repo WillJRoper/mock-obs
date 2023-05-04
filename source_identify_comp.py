@@ -119,6 +119,8 @@ grp_lum_obj = ParticleImage(
 )
 grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
 
+print("Got Luminosity Image")
+
 # Get the group mass image
 grp_mass_obj = ParticleImage(
     resolution,
@@ -131,9 +133,7 @@ grp_mass_obj = ParticleImage(
 )
 grp_mass_img = grp_mass_obj.get_smoothed_img(quintic)
 
-# Create an array of all lums and populate the ones we have calculated
-all_lums = np.full(len(los), np.nan)
-all_lums[okinds] = lums
+print("Got Mass Image")
 
 # Set up colormap and normalisation
 norm = mpl.colors.Normalize(vmin=0, vmax=len(subgrp_start))
@@ -143,6 +143,8 @@ cmap = plt.get_cmap("plasma")
 subfind_img = np.zeros((grp_lum_img.shape[0], grp_lum_img.shape[1], 4))
 subfind_id = 0
 for start, length in zip(subgrp_start, subgrp_length):
+
+    print("Making an image for subgroup %d" % subfind_id)
 
     # Get the subgroup mass image
     subgrp_mass_obj = ParticleImage(
@@ -170,6 +172,8 @@ for start, length in zip(subgrp_start, subgrp_length):
     subfind_img += subgrp_img
     
     subfind_id += 1
+
+print("Got SUBFIND image")
     
 # Create segmentation map
 

@@ -182,10 +182,10 @@ print("Got SUBFIND image")
 
 # Create plot
 fig = plt.figure()
-ax1 = fig.add_suplot(221)
-ax2 = fig.add_suplot(222)
-ax3 = fig.add_suplot(223)
-ax4 = fig.add_suplot(224)
+ax1 = fig.add_subplot(221)
+ax2 = fig.add_subplot(222)
+ax3 = fig.add_subplot(223)
+ax4 = fig.add_subplot(224)
 
 # Plot images
 ax1.imshow(grp_mass_img)

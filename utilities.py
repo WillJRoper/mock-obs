@@ -1,3 +1,4 @@
+import numpy as np
 from synthobs.sed import models
 import flare
 import flare.filters

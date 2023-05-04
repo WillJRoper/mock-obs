@@ -77,7 +77,6 @@ grp_smls = []
 subgrp_start = []
 subgrp_length = []
 for (ind, start), length in zip(enumerate(grp_s_begin), grp_s_length):
-    print(start, length)
     subgrp_start.append(len(grp_los))
     subgrp_length.append(length)
     grp_pos.extend(pos[start: start + length, :])
@@ -193,6 +192,7 @@ ax1.imshow(grp_mass_img)
 ax2.imshow(grp_lum_img)
 ax3.imshow(subfind_img)
 
-fig.savefig("plots/source_ident_comp.png", bbox_inches="tight", dpi=100)
+fig.savefig("plots/source_ident_comp_%s_%d_%d.png" % (snap, reg, group_id),
+            bbox_inches="tight", dpi=100)
 plt.close(fig)
 

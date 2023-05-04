@@ -6,7 +6,7 @@ from astropy.cosmology import Planck18 as cosmo
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-from synthesizer.imaging import ParticleImage
+from synthesizer.imaging.images import ParticleImage
 from synthesizer.kernel_functions import quintic
 
 from utilities import total_lum

@@ -97,7 +97,7 @@ subgrp_start = np.array(subgrp_start)
 subgrp_length = np.array(subgrp_length)
 
 # Calculate the geometric centre of the group
-centre = np.mean(grp_pos, axis=1)
+centre = np.mean(grp_pos, axis=0)
 
 print("Got the group data with %d particles" % len(grp_los))
 

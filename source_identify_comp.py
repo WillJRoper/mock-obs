@@ -122,7 +122,7 @@ grp_lum_obj = ParticleImage(
 )
 grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
 
-print("Got Luminosity Image", np.min(grp_lum_img[grp_mass_img > 0]),
+print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),
       np.max(grp_lum_img))
 
 # Get the group mass image

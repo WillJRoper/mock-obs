@@ -122,7 +122,8 @@ grp_lum_obj = ParticleImage(
 )
 grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
 
-print("Got Luminosity Image")
+print("Got Luminosity Image", np.min(grp_lum_img[grp_mass_img > 0]),
+      np.max(grp_lum_img))
 
 # Get the group mass image
 grp_mass_obj = ParticleImage(
@@ -136,7 +137,8 @@ grp_mass_obj = ParticleImage(
 )
 grp_mass_img = grp_mass_obj.get_smoothed_img(quintic)
 
-print("Got Mass Image")
+print("Got Mass Image", np.min(grp_mass_img[grp_mass_img > 0]),
+      np.max(grp_mass_img))
 
 # Set up colormap and normalisation
 norm = mpl.colors.Normalize(vmin=0, vmax=len(subgrp_start))

@@ -193,14 +193,12 @@ ax4 = fig.add_subplot(224)
 
 # Plot images
 ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
-    vmin=grp_s_mass.min(),
-    vmax=grp_mass_img.max()
-    - (grp_mass_img.max() * 0.3))
+    vmin=np.percentile(grp_mass_img[grp_mass_img > 0], 32),
+    vmax=np.percentile(grp_mass_img[grp_mass_img > 0], 95))
            )
 ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
-    vmin=grp_lum_img[grp_lum_img != 0].min() + ( 0.05 * grp_lum_img.max()),
-    vmax=grp_lum_img.max()
-    - (grp_lum_img.max() * 0.3))
+    vmin=np.percentile(grp_lum_img[grp_lum_img > 0], 32),
+    vmax=np.percentile(grp_lum_img[grp_lum_img > 0], 95))
            )
 ax3.imshow(subfind_img)
 

@@ -96,6 +96,9 @@ grp_smls = np.array(grp_smls)
 subgrp_start = np.array(subgrp_start)
 subgrp_length = np.array(subgrp_length)
 
+print("Min and max masses:", grp_s_mass.min(), grp_s_mass.max(),
+      grp_ini_masses.min(), grp_ini_masses.max())
+
 # Calculate the geometric centre of the group
 centre = np.mean(grp_pos, axis=0)
 
@@ -195,7 +198,7 @@ ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
     - (grp_mass_img.max() * 0.3))
            )
 ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
-    vmin=grp_lum_img[grp_lum_img != 0].min(),
+    vmin=grp_lum_img[grp_lum_img != 0].min() + ( 0.05 * grp_lum_img.max()),
     vmax=grp_lum_img.max()
     - (grp_lum_img.max() * 0.3))
            )

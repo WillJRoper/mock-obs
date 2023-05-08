@@ -51,10 +51,10 @@ s_length = reg_snap_grp["Galaxy"]["S_Length"][...]
 s_begin = np.zeros(len(s_length), dtype=int)
 s_begin[1:] = np.cumsum(s_length[:-1])
 pos = reg_snap_grp["Particle"]["S_Coordinates"][...].T / (1 + z)
-s_mass = reg_snap_grp["Particle"]["S_Mass"][...]
-ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...]
+s_mass = reg_snap_grp["Particle"]["S_Mass"][...] * 10 ** 10
+ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...] * 10 ** 10
 s_mets = reg_snap_grp["Particle"]["S_Z"][...]
-ages = reg_snap_grp["Particle"]["S_Age"][...]
+ages = reg_snap_grp["Particle"]["S_Age"][...] * 10 ** 3
 los = reg_snap_grp["Particle"]["S_los"][...]
 smls =reg_snap_grp["Particle"]["S_sml"][...]
 

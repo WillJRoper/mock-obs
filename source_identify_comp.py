@@ -190,12 +190,12 @@ ax4 = fig.add_subplot(224)
 ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
     vmin=grp_s_mass.min(),
     vmax=grp_mass_img.max()
-    - (grp_mass_img.max() * 0.1))
+    - (grp_mass_img.max() * 0.3))
            )
 ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=grp_lum_img[grp_lum_img != 0].min(),
     vmax=grp_lum_img.max()
-    - (grp_lum_img.max() * 0.1))
+    - (grp_lum_img.max() * 0.3))
            )
 ax3.imshow(subfind_img)
 

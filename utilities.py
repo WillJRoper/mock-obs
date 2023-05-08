@@ -3,6 +3,16 @@ from synthobs.sed import models
 import flare
 import flare.filters
 
+
+def lum_to_flux(lum, cosmo, z):
+
+    # Calculate the luminosity distance
+    lum_dist = cosmo.luminosity_distance(z).to('cm').value
+    
+    
+    return 1E9 * 1E23 * lum * (1.+ z) / (4. * np.pi * lum_dist ** 2)
+
+
 def DTM_fit(Z, Age):
     """
     Fit function from L-GALAXIES dust modeling

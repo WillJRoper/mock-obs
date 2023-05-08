@@ -9,9 +9,9 @@ import matplotlib as mpl
 from synthesizer.imaging.images import ParticleImage
 from synthesizer.kernel_functions import quintic
 
-from utilities import total_lum
+from utilities import total_lum, lum_to_flux
 
-from unyt import kpc, erg, s, Hz, Msun, Mpc
+from unyt import kpc, erg, s, Hz, Msun, Mpc, nJy
 
 
 # Which group and snapshot are we doing?
@@ -105,6 +105,9 @@ print("Got the group data with %d particles" % len(grp_los))
 lums = total_lum(grp_ini_masses, grp_s_mets, grp_ages, grp_los,
                  kappa=0.0795, BC_fac=1)
 
+# Concert luminosity to flux
+lums = lum_to_flux(lums, cosmo, z)
+
 print("Got luminosities...")
 
 # Get the group luminosity image
@@ -113,7 +116,7 @@ grp_lum_obj = ParticleImage(
     fov=width,
     cosmo=cosmo,
     positions=grp_pos * Mpc,
-    pixel_values=lums * erg / s / Hz,
+    pixel_values=lums * nJy,
     smoothing_lengths=grp_smls * Mpc,
     centre=centre
 )
@@ -165,11 +168,10 @@ for start, length in zip(subgrp_start, subgrp_length):
     subgrp_img = np.zeros(subfind_img.shape)
     subgrp_img[mask] = cmap(norm(subfind_id))
 
-    # Set the alpha
-    subgrp_img[:, :, -1] = alpha
-
     # Add it to the main image
-    subfind_img += subgrp_img
+    subfind_img[mask] = (
+        (subfind_img[mask] * (1 - alpha)) + (subgrp_img[mask] * alpha)
+    )
     
     subfind_id += 1
 
@@ -185,8 +187,16 @@ ax3 = fig.add_subplot(223)
 ax4 = fig.add_subplot(224)
 
 # Plot images
-ax1.imshow(grp_mass_img)
-ax2.imshow(grp_lum_img)
+ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
+    vmin=grp_s_mass.min(),
+    vmax=grp_mass_img.max()
+    - (grp_mass_img.max() * 0.1))
+           )
+ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
+    vmin=grp_lum_img[grp_lum_img != 0].min(),
+    vmax=grp_lum_img.max()
+    - (grp_lum_img.max() * 0.1))
+           )
 ax3.imshow(subfind_img)
 
 fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),

@@ -9,8 +9,9 @@ import matplotlib as mpl
 from synthesizer.imaging.images import ParticleImage
 from synthesizer.kernel_functions import quintic
 
+import webbpsf
 from utilities import total_lum, lum_to_flux
-
+import photutils as phut
 from unyt import kpc, erg, s, Hz, Msun, Mpc, nJy
 
 
@@ -113,6 +114,11 @@ lums = lum_to_flux(lums, cosmo, z)
 
 print("Got luminosities...")
 
+# Get the PSF
+psfs = {"JWST.NIRCAM.F150W": nc.calc_psf(filter='F150W', oversample=4).data[0]}
+
+print("Got the PSFs")
+
 # Get the group luminosity image
 grp_lum_obj = ParticleImage(
     resolution,
@@ -121,7 +127,11 @@ grp_lum_obj = ParticleImage(
     positions=grp_pos * Mpc,
     pixel_values=lums * nJy,
     smoothing_lengths=grp_smls * Mpc,
-    centre=centre
+    psfs=psfs,
+    centre=centre,
+    snrs=5,
+    depths={"JWST.NIRCAM.F150W": 33},
+    aperture=0.5
 )
 grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
 
@@ -181,8 +191,14 @@ for start, length in zip(subgrp_start, subgrp_length):
     subfind_id += 1
 
 print("Got SUBFIND image")
+
+# Create the signal image
     
 # Create segmentation map
+segm = phut.detect_sources(sig_img, 2.5, npixels=5)
+# segm = phut.deblend_sources(det_img, segm,
+#                             npixels=5, nlevels=32,
+#                             contrast=0.001)
 
 # Create plot
 fig = plt.figure()

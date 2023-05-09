@@ -26,6 +26,7 @@ alpha = float(sys.argv[4])
 # Get some image properties
 downsample = float(sys.argv[5])
 width = float(sys.argv[6])
+noise = float(sys.argv[7])
 
 # Get what snapshot we are doing
 tags = flares_snaps = ['001_z014p000', '002_z013p000', '003_z012p000',
@@ -139,7 +140,7 @@ grp_lum_obj = ParticleImage(
 )
 grp_lum_obj.get_smoothed_img(quintic)
 grp_lum_img = grp_lum_obj.get_psfed_imgs()
-grp_lum_img, grp_wht, grp_noise = grp_lum_obj.get_noisy_imgs(5)
+grp_lum_img, grp_wht, grp_noise = grp_lum_obj.get_noisy_imgs(noise)
 
 
 print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),
@@ -202,7 +203,7 @@ print("Got SUBFIND image")
 # Create the signal image
     
 # Create segmentation map
-segm = phut.detect_sources(sig_img, 2.5, npixels=5)
+segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
 # segm = phut.deblend_sources(det_img, segm,
 #                             npixels=5, nlevels=32,
 #                             contrast=0.001)

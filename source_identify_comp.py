@@ -220,7 +220,7 @@ ax4 = fig.add_subplot(224)
 # Plot images
 ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
     vmin=np.percentile(grp_mass_img[grp_mass_img > 0], 32),
-    vmax=np.percentile(grp_mass_img[grp_mass_img > 0], 99.5)),
+    vmax=np.percentile(grp_mass_img[grp_mass_img > 0], 99.9)),
            cmap="Greys_r"
            
            )

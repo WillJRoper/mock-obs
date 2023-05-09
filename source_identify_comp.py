@@ -22,6 +22,10 @@ reg = sys.argv[3].zfill(2)
 
 # What alpha will we use?
 alpha = float(sys.argv[4])
+width = float(sys.argv[5])
+
+# Get some image properties
+downsample = float(sys.argv[4])
 
 # Get what snapshot we are doing
 tags = flares_snaps = ['001_z014p000', '002_z013p000', '003_z012p000',
@@ -35,8 +39,8 @@ z_str = snap.split('z')[1].split('p')
 z = float(z_str[0] + '.' + z_str[1])
 
 # Define image properties
-resolution = 0.031 / cosmo.arcsec_per_kpc_proper(z).value * kpc
-width = 200 * kpc
+resolution = downsample * 0.031 / cosmo.arcsec_per_kpc_proper(z).value * kpc
+width = width * kpc
 print("Making images with %.2f kpc resolution and a %.2f FOV" % (resolution, width))
 
 # Define the path to the data

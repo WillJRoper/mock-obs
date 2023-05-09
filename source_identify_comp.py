@@ -225,12 +225,12 @@ ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
            
            )
 ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_lum_img[grp_lum_img > 0], 32),
-    vmax=np.percentile(grp_lum_img[grp_lum_img > 0], 99.5)),
+    vmin=np.percentile(grp_lum_img, 32),
+    vmax=np.percentile(grp_lum_img, 99.9)),
            cmap="Greys_r"
            )
 ax3.imshow(subfind_img)
-ax3.imshow(segm.data)
+ax4.imshow(segm.data)
 
 fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100)

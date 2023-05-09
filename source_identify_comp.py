@@ -115,7 +115,7 @@ lums = lum_to_flux(lums, cosmo, z)
 print("Got luminosities...")
 
 # Get the PSF
-psfs = {"JWST.NIRCAM.F150W": nc.calc_psf(filter='F150W', oversample=4).data[0]}
+psf = nc.calc_psf(filter='F150W', oversample=4).data[0]
 
 print("Got the PSFs")
 
@@ -127,13 +127,14 @@ grp_lum_obj = ParticleImage(
     positions=grp_pos * Mpc,
     pixel_values=lums * nJy,
     smoothing_lengths=grp_smls * Mpc,
-    psfs=psfs,
+    psfs=psf,
     centre=centre,
-    snrs=5,
-    depths={"JWST.NIRCAM.F150W": 33},
-    aperture=0.5
+    super_resolution_factor=2
 )
-grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
+grp_lum_obj.get_smoothed_img(quintic)
+grp_lum_img = grp_lum_obj.get_psfed_imgs()
+grp_lum_img, grp_wht, grp_noise = grp_lum_obj.get_noisy_imgs(5)
+
 
 print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),
       np.max(grp_lum_img))

@@ -121,7 +121,7 @@ print("Got luminosities...")
 # Get the PSF
 nc = webbpsf.NIRCam()
 nc.filter = 'F150W'
-psf = nc.calc_psf(oversample=4).data[0]
+psf = nc.calc_psf(oversample=4)[0].data
 
 print("Got the PSFs")
 

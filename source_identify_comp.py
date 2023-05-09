@@ -228,6 +228,7 @@ ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax3.imshow(subfind_img)
+ax3.imshow(segm)
 
 fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100)

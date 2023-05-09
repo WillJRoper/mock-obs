@@ -203,7 +203,9 @@ print("Got SUBFIND image")
 # Create the signal image
     
 # Create segmentation map
-segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
+sig_image = grp_lum_img / noise
+print(sig_image[sig_image > 0].min(), sig_image.max())
+# segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
 # segm = phut.deblend_sources(det_img, segm,
 #                             npixels=5, nlevels=32,
 #                             contrast=0.001)
@@ -228,7 +230,7 @@ ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax3.imshow(subfind_img)
-ax3.imshow(segm)
+# ax3.imshow(segm)
 
 fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100)

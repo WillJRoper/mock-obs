@@ -119,6 +119,7 @@ lums = lum_to_flux(lums, cosmo, z)
 print("Got luminosities...")
 
 # Get the PSF
+nc = webbpsf.NIRCam()
 psf = nc.calc_psf(filter='F150W', oversample=4).data[0]
 
 print("Got the PSFs")

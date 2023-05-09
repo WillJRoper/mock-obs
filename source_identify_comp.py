@@ -5,6 +5,7 @@ from astropy.cosmology import Planck18 as cosmo
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.gridspec as gridspec
 
 from synthesizer.imaging.images import ParticleImage
 from synthesizer.kernel_functions import quintic
@@ -212,12 +213,19 @@ segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
 
 # Create plot
 fig = plt.figure()
-ax1 = fig.add_subplot(221)
-ax2 = fig.add_subplot(222)
-ax3 = fig.add_subplot(223)
-ax4 = fig.add_subplot(224)
+gs = gridspec.GridSpec(ncols=2, nrows=2, figure=fig, wspace=0, hspace=0)
+ax1 = fig.add_subplot(gs[0, 0])
+ax2 = fig.add_subplot(gs[0, 1])
+ax3 = fig.add_subplot(gs[1, 0])
+ax4 = fig.add_subplot(gs[1, 1])
 
-# Plot images
+# Turn off axes
+ax1.axis('off')
+ax2.axis('off')
+ax3.axis('off')
+ax4.axis('off')
+
+# plot images
 ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
     vmin=np.percentile(grp_mass_img[grp_mass_img > 0], 32),
     vmax=np.percentile(grp_mass_img[grp_mass_img > 0], 99.9)),

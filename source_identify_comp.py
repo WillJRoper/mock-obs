@@ -22,10 +22,10 @@ reg = sys.argv[3].zfill(2)
 
 # What alpha will we use?
 alpha = float(sys.argv[4])
-width = float(sys.argv[5])
 
 # Get some image properties
-downsample = float(sys.argv[4])
+downsample = float(sys.argv[5])
+width = float(sys.argv[6])
 
 # Get what snapshot we are doing
 tags = flares_snaps = ['001_z014p000', '002_z013p000', '003_z012p000',

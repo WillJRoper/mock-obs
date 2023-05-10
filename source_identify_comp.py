@@ -167,8 +167,8 @@ norm = mpl.colors.Normalize(vmin=0, vmax=len(subgrp_start))
 cmap = plt.get_cmap("plasma")
 
 # Loop over subgroups and create subfind labelled image
-subfind_img = np.zeros((grp_lum_img.shape[0], grp_lum_img.shape[1], 4))
-subfind_id = 0
+subfind_img = np.zeros((grp_lum_img.shape[0], grp_lum_img.shape[1]))
+subfind_id = 1
 for start, length in zip(subgrp_start, subgrp_length):
 
     print("Making an image for subgroup %d" % subfind_id)
@@ -190,7 +190,7 @@ for start, length in zip(subgrp_start, subgrp_length):
 
     # Create an image to hold this subgroup
     subgrp_img = np.zeros(subfind_img.shape)
-    subgrp_img[mask] = cmap(norm(subfind_id))
+    subgrp_img[mask] = subfind_id
 
     # Add it to the main image
     subfind_img[mask] = (
@@ -210,9 +210,13 @@ segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
 # segm = phut.deblend_sources(det_img, segm,
 #                             npixels=5, nlevels=32,
 #                             contrast=0.001)
+print(np.unique(segm))
+
+# Remove pixels below the background from the subfind ID image
+subfind_img[segm == segm.min()] = 0
 
 # Create plot
-fig = plt.figure()
+fig = plt.figure(figsize=(7, 7))
 gs = gridspec.GridSpec(ncols=2, nrows=2, figure=fig, wspace=0, hspace=0)
 ax1 = fig.add_subplot(gs[0, 0])
 ax2 = fig.add_subplot(gs[0, 1])
@@ -234,11 +238,11 @@ ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
            )
 ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=np.percentile(grp_lum_img, 32),
-    vmax=np.percentile(grp_lum_img, 99.9)),
+    vmax=np.percentile(grp_lum_img, 99.999)),
            cmap="Greys_r"
            )
-ax3.imshow(subfind_img)
-ax4.imshow(segm.data)
+ax3.imshow(subfind_img, cmap="plasma")
+ax4.imshow(segm.data, cmap="plasma")
 
 fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100)

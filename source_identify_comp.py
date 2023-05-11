@@ -127,25 +127,25 @@ psf = nc.calc_psf(oversample=4)[0].data
 
 print("Got the PSFs")
 
-# Get the group luminosity image
-grp_lum_obj = ParticleImage(
-    resolution,
-    fov=width,
-    cosmo=cosmo,
-    positions=grp_pos * Mpc,
-    pixel_values=lums * nJy,
-    smoothing_lengths=grp_smls * Mpc,
-    psfs=psf,
-    centre=centre,
-    super_resolution_factor=2
-)
-grp_lum_obj.get_smoothed_img(quintic)
-grp_lum_img = grp_lum_obj.get_psfed_imgs()
-grp_lum_img, grp_wht, grp_noise = grp_lum_obj.get_noisy_imgs(noise)
+# # Get the group luminosity image
+# grp_lum_obj = ParticleImage(
+#     resolution,
+#     fov=width,
+#     cosmo=cosmo,
+#     positions=grp_pos * Mpc,
+#     pixel_values=lums * nJy,
+#     smoothing_lengths=grp_smls * Mpc,
+#     psfs=psf,
+#     centre=centre,
+#     super_resolution_factor=2
+# )
+# grp_lum_obj.get_smoothed_img(quintic)
+# grp_lum_img = grp_lum_obj.get_psfed_imgs()
+# grp_lum_img, grp_wht, grp_noise = grp_lum_obj.get_noisy_imgs(noise)
 
 
-print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),
-      np.max(grp_lum_img))
+# print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),
+#       np.max(grp_lum_img))
 
 # Get the group mass image
 grp_mass_obj = ParticleImage(
@@ -162,89 +162,89 @@ grp_mass_img = grp_mass_obj.get_smoothed_img(quintic)
 print("Got Mass Image", np.min(grp_mass_img[grp_mass_img > 0]),
       np.max(grp_mass_img))
 
-# Set up colormap and normalisation
-norm = mpl.colors.Normalize(vmin=0, vmax=len(subgrp_start))
-cmap = plt.get_cmap("plasma")
+# # Set up colormap and normalisation
+# norm = mpl.colors.Normalize(vmin=0, vmax=len(subgrp_start))
+# cmap = plt.get_cmap("plasma")
 
-# Loop over subgroups and create subfind labelled image
-subfind_img = np.zeros((grp_lum_img.shape[0], grp_lum_img.shape[1]))
-subfind_id = 1
-for start, length in zip(subgrp_start, subgrp_length):
+# # Loop over subgroups and create subfind labelled image
+# subfind_img = np.zeros((grp_lum_img.shape[0], grp_lum_img.shape[1]))
+# subfind_id = 1
+# for start, length in zip(subgrp_start, subgrp_length):
 
-    print("Making an image for subgroup %d" % subfind_id)
+#     print("Making an image for subgroup %d" % subfind_id)
 
-    # Get the subgroup mass image
-    subgrp_mass_obj = ParticleImage(
-        resolution,
-        fov=width,
-        cosmo=cosmo,
-        positions=grp_pos[start: start + length, :] * Mpc,
-        pixel_values=grp_s_mass[start: start + length] * Msun,
-        smoothing_lengths=grp_smls[start: start + length] * Mpc,
-        centre=centre
-    )
-    subgrp_mass_img = subgrp_mass_obj.get_smoothed_img(quintic)
+#     # Get the subgroup mass image
+#     subgrp_mass_obj = ParticleImage(
+#         resolution,
+#         fov=width,
+#         cosmo=cosmo,
+#         positions=grp_pos[start: start + length, :] * Mpc,
+#         pixel_values=grp_s_mass[start: start + length] * Msun,
+#         smoothing_lengths=grp_smls[start: start + length] * Mpc,
+#         centre=centre
+#     )
+#     subgrp_mass_img = subgrp_mass_obj.get_smoothed_img(quintic)
 
-    # Get the mask for nonzero pixels
-    mask = subgrp_mass_img > 0
+#     # Get the mask for nonzero pixels
+#     mask = subgrp_mass_img > 0
 
-    # Create an image to hold this subgroup
-    subgrp_img = np.zeros(subfind_img.shape)
-    subgrp_img[mask] = subfind_id
+#     # Create an image to hold this subgroup
+#     subgrp_img = np.zeros(subfind_img.shape)
+#     subgrp_img[mask] = subfind_id
 
-    # Add it to the main image
-    subfind_img[mask] = (
-        (subfind_img[mask] * (1 - alpha)) + (subgrp_img[mask] * alpha)
-    )
+#     # Add it to the main image
+#     subfind_img[mask] = (
+#         (subfind_img[mask] * (1 - alpha)) + (subgrp_img[mask] * alpha)
+#     )
     
-    subfind_id += 1
+#     subfind_id += 1
 
-print("Got SUBFIND image")
+# print("Got SUBFIND image")
 
-# Create the signal image
+# # Create the signal image
     
-# Create segmentation map
-sig_image = grp_lum_img / noise
-print(sig_image[sig_image > 0].min(), sig_image.max())
-segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
-# segm = phut.deblend_sources(det_img, segm,
-#                             npixels=5, nlevels=32,
-#                             contrast=0.001)
-print(np.unique(segm))
+# # Create segmentation map
+# sig_image = grp_lum_img / noise
+# print(sig_image[sig_image > 0].min(), sig_image.max())
+# segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
+# # segm = phut.deblend_sources(det_img, segm,
+# #                             npixels=5, nlevels=32,
+# #                             contrast=0.001)
+# print(np.unique(segm))
 
-# Remove pixels below the background from the subfind ID image
-subfind_img[segm.data == segm.data.min()] = 0
+# # Remove pixels below the background from the subfind ID image
+# subfind_img[segm.data == segm.data.min()] = 0
 
-# Create plot
-fig = plt.figure(figsize=(7, 7))
-gs = gridspec.GridSpec(ncols=2, nrows=2, figure=fig, wspace=0, hspace=0)
-ax1 = fig.add_subplot(gs[0, 0])
-ax2 = fig.add_subplot(gs[0, 1])
-ax3 = fig.add_subplot(gs[1, 0])
-ax4 = fig.add_subplot(gs[1, 1])
+# # Create plot
+# fig = plt.figure(figsize=(7, 7))
+# gs = gridspec.GridSpec(ncols=2, nrows=2, figure=fig, wspace=0, hspace=0)
+# ax1 = fig.add_subplot(gs[0, 0])
+# ax2 = fig.add_subplot(gs[0, 1])
+# ax3 = fig.add_subplot(gs[1, 0])
+# ax4 = fig.add_subplot(gs[1, 1])
 
-# Turn off axes
-ax1.axis('off')
-ax2.axis('off')
-ax3.axis('off')
-ax4.axis('off')
+# # Turn off axes
+# ax1.axis('off')
+# ax2.axis('off')
+# ax3.axis('off')
+# ax4.axis('off')
 
-# plot images
-ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_mass_img[grp_mass_img > 0], 32),
-    vmax=np.percentile(grp_mass_img[grp_mass_img > 0], 99.9)),
-           cmap="Greys_r"
+# # plot images
+# ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
+#     vmin=np.percentile(grp_mass_img[grp_mass_img > 0], 32),
+#     vmax=np.percentile(grp_mass_img[grp_mass_img > 0], 99.9)),
+#            cmap="Greys_r"
            
-           )
-ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_lum_img, 32),
-    vmax=np.percentile(grp_lum_img, 99.999)),
-           cmap="Greys_r"
-           )
-ax3.imshow(subfind_img, cmap="plasma")
-ax4.imshow(segm.data, cmap="plasma")
+#            )
+# ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
+#     vmin=np.percentile(grp_lum_img, 32),
+#     vmax=np.percentile(grp_lum_img, 99.999)),
+#            cmap="Greys_r"
+#            )
+# ax3.imshow(subfind_img, cmap="plasma")
+# ax4.imshow(segm.data, cmap="plasma")
 
-fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
-            bbox_inches="tight", dpi=100)
-plt.close(fig)
+# fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
+#             bbox_inches="tight", dpi=100)
+# plt.close(fig)
 

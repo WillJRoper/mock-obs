@@ -157,6 +157,7 @@ grp_mass_obj = ParticleImage(
     smoothing_lengths=grp_smls * Mpc,
     centre=centre
 )
+print(grp_s_mass * Msun)
 grp_mass_img = grp_mass_obj.get_smoothed_img(quintic)
 
 print("Got Mass Image", np.min(grp_mass_img[grp_mass_img > 0]),

@@ -146,7 +146,7 @@ print("Got the PSFs")
 
 # print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),
 #       np.max(grp_lum_img))
-
+print(grp_s_mass * Msun)
 # Get the group mass image
 grp_mass_obj = ParticleImage(
     resolution,

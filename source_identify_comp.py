@@ -213,7 +213,7 @@ segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
 print(np.unique(segm))
 
 # Remove pixels below the background from the subfind ID image
-subfind_img[segm == segm.min()] = 0
+subfind_img[segm.data == segm.data.min()] = 0
 
 # Create plot
 fig = plt.figure(figsize=(7, 7))

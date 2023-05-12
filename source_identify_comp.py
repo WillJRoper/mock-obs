@@ -151,14 +151,15 @@ print(grp_s_mass * Msun)
 grp_mass_obj = ParticleImage(
     resolution,
     fov=width,
+    cosmo=cosmo,
     positions=grp_pos * Mpc,
     pixel_values=grp_s_mass * Msun,
     smoothing_lengths=grp_smls * Mpc,
+    rest_frame=True,
     centre=centre
 )
-print(grp_s_mass * Msun)
 grp_mass_img = grp_mass_obj.get_smoothed_img(quintic)
-
+print(grp_s_mass * Msun)
 print("Got Mass Image", np.min(grp_mass_img[grp_mass_img > 0]),
       np.max(grp_mass_img))
 

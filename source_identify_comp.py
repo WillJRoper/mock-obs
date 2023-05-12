@@ -151,7 +151,6 @@ print(grp_s_mass * Msun)
 grp_mass_obj = ParticleImage(
     resolution,
     fov=width,
-    cosmo=cosmo,
     positions=grp_pos * Mpc,
     pixel_values=grp_s_mass * Msun,
     smoothing_lengths=grp_smls * Mpc,

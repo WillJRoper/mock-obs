@@ -207,7 +207,7 @@ print("Got SUBFIND image")
 # Create segmentation map
 sig_image = grp_lum_img / noise
 print(sig_image[sig_image > 0].min(), sig_image.max())
-segm = phut.detect_sources(grp_lum_img / noise, 2.5, npixels=5)
+segm = phut.detect_sources(sig_image, 2.5, npixels=5)
 # segm = phut.deblend_sources(det_img, segm,
 #                             npixels=5, nlevels=32,
 #                             contrast=0.001)
@@ -231,15 +231,12 @@ ax3.axis('off')
 ax4.axis('off')
 
 # plot images
-ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_mass_img[grp_mass_img > 0], 36),
-    vmax=np.percentile(grp_mass_img[grp_mass_img > 0], 99.99)),
+ax1.imshow(grp_mass_img, norm=mpl.colors.LogNorm(),
            cmap="Greys_r"
-           
            )
 ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=np.percentile(grp_lum_img, 36),
-    vmax=np.percentile(grp_lum_img, 99.999)),
+    vmax=np.percentile(grp_lum_img, 99.9)),
            cmap="Greys_r"
            )
 ax3.imshow(subfind_img, cmap="plasma")

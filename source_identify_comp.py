@@ -200,7 +200,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_smass_img, norm=mpl.colors.Normalize(
     vmin=0,
-    vmax=np.percentile(grp_smass_img, 99.9)),
+    vmax=np.percentile(grp_smass_img, 99.99)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -294,7 +294,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=0,
-    vmax=np.percentile(grp_lum_img, 99.999)),
+    vmax=np.percentile(grp_lum_img, 99.99)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -308,7 +308,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=0,
-    vmax=np.percentile(grp_lum_img, 99.999)),
+    vmax=np.percentile(grp_lum_img, 99.99)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -322,7 +322,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=np.percentile(grp_lum_img, 36),
-    vmax=np.percentile(grp_lum_img, 99.999)),
+    vmax=np.percentile(grp_lum_img, 99.99)),
            cmap="Greys_r"
            )
 ax.axis('off')

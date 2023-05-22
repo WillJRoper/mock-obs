@@ -464,7 +464,7 @@ print(np.unique(segm))
 fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(segm.data,
-          cmap="plasma"
+          cmap="viridis"
           )
 ax.axis('off')
 fig.savefig("plots/%s_%s_%d/segm.png" % (snap, reg, group_id),

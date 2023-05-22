@@ -343,7 +343,7 @@ print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),
       np.max(grp_lum_img))
 
 # Set up colormap and normalisation
-norm = mpl.colors.Normalize(vmin=0, vmax=len(subgrp_start))
+norm = mpl.colors.Normalize(vmin=0, vmax=len(subgrp_sstart))
 cmap = plt.get_cmap("plasma")
 
 # Loop over subgroups and create subfind labelled image
@@ -381,6 +381,75 @@ for start, length in zip(subgrp_sstart, subgrp_slength):
 
 print("Got SUBFIND image")
 
+fig = plt.figure(figsize=(3.5, 3.5))
+ax = fig.add_subplot(111)
+ax.imshow(subfind_img,
+          cmap="Greys_r"
+          )
+ax.axis('off')
+fig.savefig("plots/%s_%s_%d/subfind_stars.png" % (snap, reg, group_id),
+            bbox_inches="tight", dpi=100, pad_inches=0)
+plt.close()
+
+# Loop over subgroups and create subfind labelled image
+subfind_img = np.zeros((grp_lum_img.shape[0], grp_lum_img.shape[1]))
+subfind_id = 1
+for sstart, slength, dmstart, dmlength, gstart, glength in zip(subgrp_sstart, subgrp_slength,
+                                                               subgrp_dmstart, subgrp_dmlength,
+                                                               subgrp_gstart, subgrp_glength):
+
+    print("Making an image for subgroup %d" % subfind_id)
+
+    pos = np.concatenate((
+        grp_s_pos[sstart: sstart + slength, :],
+        grp_dm_pos[dmstart: dmstart + dmlength, :],
+        grp_g_pos[gstart: gstart + glength, :],
+    )) * Mpc
+    mass = np.ones(slength + dmlength + glength)
+    smls = np.concatenate((
+        grp_s_smls[sstart: sstart + slength],
+        grp_dm_smls[dmstart: dmstart + dmlength],
+        grp_g_smls[gstart: gstart + glength],
+    )) * Mpc
+
+    # Get the subgroup mass image
+    subgrp_mass_obj = ParticleImage(
+        resolution,
+        fov=width,
+        cosmo=cosmo,
+        positions=pos,
+        pixel_values=mass,
+        smoothing_lengths=smls,
+        centre=centre
+    )
+    subgrp_mass_img = subgrp_mass_obj.get_smoothed_img(quintic)
+
+    # Get the mask for nonzero pixels
+    mask = subgrp_mass_img > 0
+
+    # Create an image to hold this subgroup
+    subgrp_img = np.zeros(subfind_img.shape)
+    subgrp_img[mask] = subfind_id
+
+    # Add it to the main image
+    subfind_img[mask] = (
+        (subfind_img[mask] * (1 - alpha)) + (subgrp_img[mask] * alpha)
+    )
+    
+    subfind_id += 1
+
+print("Got SUBFIND image")
+
+fig = plt.figure(figsize=(3.5, 3.5))
+ax = fig.add_subplot(111)
+ax.imshow(subfind_img,
+          cmap="Greys_r"
+          )
+ax.axis('off')
+fig.savefig("plots/%s_%s_%d/subfind_all.png" % (snap, reg, group_id),
+            bbox_inches="tight", dpi=100, pad_inches=0)
+plt.close()
+
 # Create the signal image
     
 # Create segmentation map
@@ -392,8 +461,18 @@ segm = phut.detect_sources(sig_image, 2.5, npixels=5)
 #                             contrast=0.001)
 print(np.unique(segm))
 
-# Remove pixels below the background from the subfind ID image
-subfind_img[segm.data == segm.data.min()] = 0
+fig = plt.figure(figsize=(3.5, 3.5))
+ax = fig.add_subplot(111)
+ax.imshow(segm.data,
+          cmap="Greys_r"
+          )
+ax.axis('off')
+fig.savefig("plots/%s_%s_%d/segm.png" % (snap, reg, group_id),
+            bbox_inches="tight", dpi=100, pad_inches=0)
+plt.close()
+
+# # Remove pixels below the background from the subfind ID image
+# subfind_img[segm.data == segm.data.min()] = 0
 
 # Create plot
 fig = plt.figure(figsize=(7, 7))
@@ -410,9 +489,11 @@ ax3.axis('off')
 ax4.axis('off')
 
 # plot images
-ax1.imshow(grp_mass_img, norm=mpl.colors.LogNorm(),
-           cmap="Greys_r"
-           )
+ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
+    vmin=0,
+    vmax=np.percentile(grp_lum_img, 99.9)),
+        cmap="Greys_r"
+        )
 ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=np.percentile(grp_lum_img, 36),
     vmax=np.percentile(grp_lum_img, 99.9)),

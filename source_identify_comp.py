@@ -384,7 +384,7 @@ print("Got SUBFIND image")
 fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(subfind_img,
-          cmap="Greys_r"
+          cmap="plasma"
           )
 ax.axis('off')
 fig.savefig("plots/%s_%s_%d/subfind_stars.png" % (snap, reg, group_id),
@@ -443,7 +443,7 @@ print("Got SUBFIND image")
 fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(subfind_img,
-          cmap="Greys_r"
+          cmap="plasma"
           )
 ax.axis('off')
 fig.savefig("plots/%s_%s_%d/subfind_all.png" % (snap, reg, group_id),
@@ -464,7 +464,7 @@ print(np.unique(segm))
 fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(segm.data,
-          cmap="Greys_r"
+          cmap="plasma"
           )
 ax.axis('off')
 fig.savefig("plots/%s_%s_%d/segm.png" % (snap, reg, group_id),
@@ -474,35 +474,35 @@ plt.close()
 # # Remove pixels below the background from the subfind ID image
 # subfind_img[segm.data == segm.data.min()] = 0
 
-# Create plot
-fig = plt.figure(figsize=(7, 7))
-gs = gridspec.GridSpec(ncols=2, nrows=2, figure=fig, wspace=0, hspace=0)
-ax1 = fig.add_subplot(gs[0, 0])
-ax2 = fig.add_subplot(gs[0, 1])
-ax3 = fig.add_subplot(gs[1, 0])
-ax4 = fig.add_subplot(gs[1, 1])
+# # Create plot
+# fig = plt.figure(figsize=(7, 7))
+# gs = gridspec.GridSpec(ncols=2, nrows=2, figure=fig, wspace=0, hspace=0)
+# ax1 = fig.add_subplot(gs[0, 0])
+# ax2 = fig.add_subplot(gs[0, 1])
+# ax3 = fig.add_subplot(gs[1, 0])
+# ax4 = fig.add_subplot(gs[1, 1])
 
-# Turn off axes
-ax1.axis('off')
-ax2.axis('off')
-ax3.axis('off')
-ax4.axis('off')
+# # Turn off axes
+# ax1.axis('off')
+# ax2.axis('off')
+# ax3.axis('off')
+# ax4.axis('off')
 
-# plot images
-ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
-    vmin=0,
-    vmax=np.percentile(grp_lum_img, 99.9)),
-        cmap="Greys_r"
-        )
-ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_lum_img, 36),
-    vmax=np.percentile(grp_lum_img, 99.9)),
-           cmap="Greys_r"
-           )
-ax3.imshow(subfind_img, cmap="plasma")
-ax4.imshow(segm.data, cmap="plasma")
+# # plot images
+# ax1.imshow(grp_mass_img, norm=mpl.colors.Normalize(
+#     vmin=0,
+#     vmax=np.percentile(grp_lum_img, 99.9)),
+#         cmap="Greys_r"
+#         )
+# ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
+#     vmin=np.percentile(grp_lum_img, 36),
+#     vmax=np.percentile(grp_lum_img, 99.9)),
+#            cmap="Greys_r"
+#            )
+# ax3.imshow(subfind_img, cmap="plasma")
+# ax4.imshow(segm.data, cmap="plasma")
 
-fig.savefig("plots/%s_%s_%d/source_ident_comp.png" % (snap, reg, group_id),
-            bbox_inches="tight", dpi=100)
-plt.close(fig)
+# fig.savefig("plots/%s_%s_%d/source_ident_comp.png" % (snap, reg, group_id),
+#             bbox_inches="tight", dpi=100)
+# plt.close(fig)
 

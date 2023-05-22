@@ -287,7 +287,7 @@ fig = plt.figure(figsize=(1,1))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=0,
-    vmax=np.percentile(grp_smass_img, 99.9)),
+    vmax=np.percentile(grp_lum_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')

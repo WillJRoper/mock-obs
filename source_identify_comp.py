@@ -1,4 +1,5 @@
 import sys
+import os
 import h5py
 import numpy as np
 from astropy.cosmology import Planck18 as cosmo
@@ -80,6 +81,10 @@ g_mass = reg_snap_grp["Particle"]["G_Mass"][...] * 10 ** 10
 g_smls = reg_snap_grp["Particle"]["G_sml"][...]
 
 print("Got data...")
+
+# Make plot directory
+if not os.path.exists("plots/%s_%s_%d" % (snap, reg, group_id)):
+   os.makedirs('my_folder')
 
 # Extract this groups data
 okinds = grps == group_id
@@ -197,7 +202,7 @@ ax.imshow(grp_smass_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax.axis('off')
-fig.savefig("plots/stellar/stellarmass_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/stellarmass.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100, pad_inches=0)
 plt.close()
 
@@ -225,7 +230,7 @@ ax.imshow(grp_dmmass_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax.axis('off')
-fig.savefig("plots/darkmatter/darkmattermass_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/darkmattermass.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100, pad_inches=0)
 plt.close()
 
@@ -253,7 +258,7 @@ ax.imshow(grp_gmass_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax.axis('off')
-fig.savefig("plots/gas/gasmass_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/gasmass.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100, pad_inches=0)
 plt.close()
 
@@ -291,7 +296,7 @@ ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax.axis('off')
-fig.savefig("plots/stellar/stellarlum_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/stellarlum.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100, pad_inches=0)
 plt.close()
 
@@ -305,7 +310,7 @@ ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax.axis('off')
-fig.savefig("plots/stellar/stellarlum_psf_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/stellarlum_psf.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100, pad_inches=0)
 plt.close()
 
@@ -319,7 +324,7 @@ ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
            cmap="Greys_r"
            )
 ax.axis('off')
-fig.savefig("plots/stellar/stellarlum_psfnoise_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/stellarlum_psfnoise.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100, pad_inches=0)
 plt.close()
 
@@ -329,7 +334,7 @@ ax.imshow(grp_noise,
           cmap="Greys_r"
           )
 ax.axis('off')
-fig.savefig("plots/noise_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/noise.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100, pad_inches=0)
 plt.close()
 
@@ -416,7 +421,7 @@ ax2.imshow(grp_lum_img, norm=mpl.colors.Normalize(
 ax3.imshow(subfind_img, cmap="plasma")
 ax4.imshow(segm.data, cmap="plasma")
 
-fig.savefig("plots/source_ident_comp_%s_%s_%d.png" % (snap, reg, group_id),
+fig.savefig("plots/%s_%s_%d/source_ident_comp.png" % (snap, reg, group_id),
             bbox_inches="tight", dpi=100)
 plt.close(fig)
 

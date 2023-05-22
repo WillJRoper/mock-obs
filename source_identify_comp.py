@@ -14,7 +14,7 @@ from synthesizer.kernel_functions import quintic
 import webbpsf
 from utilities import total_lum, lum_to_flux
 import photutils as phut
-from unyt import kpc, erg, s, Hz, Msun, Mpc, nJy
+from unyt import kpc, erg, s, Hz, Msun, Mpc, nJy, pc
 
 
 # Which group and snapshot are we doing?
@@ -175,6 +175,8 @@ centre = np.mean(grp_s_pos, axis=0)
 print("Got the group data with %d particles" % len(grp_los))
 
 # Compute luminosities for this group
+grp_los *= 1 / pc
+grp_los.to(1 / Mpc)
 lums = total_lum(grp_ini_masses, grp_s_mets, grp_ages, grp_los,
                  kappa=0.0795, BC_fac=1)
 

@@ -358,9 +358,9 @@ for start, length in zip(subgrp_sstart, subgrp_slength):
         resolution,
         fov=width,
         cosmo=cosmo,
-        positions=grp_pos[start: start + length, :] * Mpc,
+        positions=grp_s_pos[start: start + length, :] * Mpc,
         pixel_values=grp_s_mass[start: start + length] * Msun,
-        smoothing_lengths=grp_smls[start: start + length] * Mpc,
+        smoothing_lengths=grp_s_smls[start: start + length] * Mpc,
         centre=centre
     )
     subgrp_mass_img = subgrp_mass_obj.get_smoothed_img(quintic)

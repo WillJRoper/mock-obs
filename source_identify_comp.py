@@ -283,7 +283,7 @@ grp_lum_obj = ParticleImage(
 )
 grp_lum_img = grp_lum_obj.get_smoothed_img(quintic)
 
-fig = plt.figure(figsize=(1,1))
+fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=0,
@@ -296,7 +296,42 @@ fig.savefig("plots/stellar/stellarlum_%s_%s_%d.png" % (snap, reg, group_id),
 plt.close()
 
 grp_lum_img = grp_lum_obj.get_psfed_imgs()
+
+fig = plt.figure(figsize=(3.5, 3.5))
+ax = fig.add_subplot(111)
+ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
+    vmin=0,
+    vmax=np.percentile(grp_lum_img, 99.9)),
+           cmap="Greys_r"
+           )
+ax.axis('off')
+fig.savefig("plots/stellar/stellarlum_psf_%s_%s_%d.png" % (snap, reg, group_id),
+            bbox_inches="tight", dpi=100, pad_inches=0)
+plt.close()
+
 grp_lum_img, grp_wht, grp_noise = grp_lum_obj.get_noisy_imgs(noise)
+
+fig = plt.figure(figsize=(3.5, 3.5))
+ax = fig.add_subplot(111)
+ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
+    vmin=np.percentile(grp_lum_img, 36),
+    vmax=np.percentile(grp_lum_img, 99.9)),
+           cmap="Greys_r"
+           )
+ax.axis('off')
+fig.savefig("plots/stellar/stellarlum_psfnoise_%s_%s_%d.png" % (snap, reg, group_id),
+            bbox_inches="tight", dpi=100, pad_inches=0)
+plt.close()
+
+fig = plt.figure(figsize=(3.5, 3.5))
+ax = fig.add_subplot(111)
+ax.imshow(grp_noise,
+          cmap="Greys_r"
+          )
+ax.axis('off')
+fig.savefig("plots/noise_%s_%s_%d.png" % (snap, reg, group_id),
+            bbox_inches="tight", dpi=100, pad_inches=0)
+plt.close()
 
 
 print("Got Luminosity Image", np.min(grp_lum_img[grp_lum_img > 0]),

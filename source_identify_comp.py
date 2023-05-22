@@ -71,7 +71,6 @@ dm_length = reg_snap_grp["Galaxy"]["DM_Length"][...]
 dm_begin = np.zeros(len(dm_length), dtype=int)
 dm_begin[1:] = np.cumsum(dm_length[:-1])
 dm_pos = reg_snap_grp["Particle"]["DM_Coordinates"][...].T / (1 + z)
-dm_mass = reg_snap_grp["Particle"]["DM_Mass"][...] * 10 ** 10
 
 g_length = reg_snap_grp["Galaxy"]["G_Length"][...]
 g_begin = np.zeros(len(g_length), dtype=int)

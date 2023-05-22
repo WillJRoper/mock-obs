@@ -84,7 +84,7 @@ print("Got data...")
 
 # Make plot directory
 if not os.path.exists("plots/%s_%s_%d" % (snap, reg, group_id)):
-   os.makedirs('my_folder')
+   os.makedirs("plots/%s_%s_%d" % (snap, reg, group_id))
 
 # Extract this groups data
 okinds = grps == group_id

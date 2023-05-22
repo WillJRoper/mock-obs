@@ -137,7 +137,7 @@ for (ind, sstart), slength, dmstart, dmlength, gstart, glength in zip(
     
     grp_g_pos.extend(g_pos[gstart: gstart + glength, :])
     grp_g_mass.extend(g_mass[gstart: gstart + glength])
-    grp_smls.extend(g_smls[gstart: gstart + glength])
+    grp_g_smls.extend(g_smls[gstart: gstart + glength])
     
 grp_s_pos = np.array(grp_s_pos)
 grp_s_mass = np.array(grp_s_mass)

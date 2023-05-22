@@ -186,8 +186,8 @@ grp_smass_obj = ParticleImage(
 )
 grp_smass_img = grp_smass_obj.get_smoothed_img(quintic)
 
-print("Got Stellar Mass Image", np.min(grp_mass_img[grp_mass_img > 0]),
-      np.max(grp_mass_img))
+print("Got Stellar Mass Image", np.min(grp_smass_img[grp_smass_img > 0]),
+      np.max(grp_smass_img))
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -210,8 +210,8 @@ grp_dmmass_obj = ParticleImage(
 )
 grp_dmmass_img = grp_dmmass_obj.get_smoothed_img(quintic)
 
-print("Got Dark Matter Mass Image", np.min(grp_mass_img[grp_mass_img > 0]),
-      np.max(grp_mass_img))
+print("Got Dark Matter Mass Image", np.min(grp_dmmass_img[grp_dmmass_img > 0]),
+      np.max(grp_dmmass_img))
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -234,8 +234,8 @@ grp_gmass_obj = ParticleImage(
 )
 grp_gmass_img = grp_gmass_obj.get_smoothed_img(quintic)
 
-print("Got Gas Mass Image", np.min(grp_mass_img[grp_mass_img > 0]),
-      np.max(grp_mass_img))
+print("Got Gas Mass Image", np.min(grp_gmass_img[grp_gmass_img > 0]),
+      np.max(grp_gmass_img))
 
 fig = plt.figure()
 ax = fig.add_subplot(111)

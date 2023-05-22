@@ -192,8 +192,8 @@ print("Got Stellar Mass Image", np.min(grp_smass_img[grp_smass_img > 0]),
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.imshow(grp_smass_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_smass_img, 36),
-    vmax=np.percentile(grp_smass_img, 99)),
+    vmin=0,
+    vmax=np.percentile(grp_smass_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -220,8 +220,8 @@ print("Got Dark Matter Mass Image", np.min(grp_dmmass_img[grp_dmmass_img > 0]),
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.imshow(grp_dmmass_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_dmmass_img, 36),
-    vmax=np.percentile(grp_dmmass_img, 99)),
+    vmin=0,
+    vmax=np.percentile(grp_dmmass_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -248,8 +248,8 @@ print("Got Gas Mass Image", np.min(grp_gmass_img[grp_gmass_img > 0]),
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.imshow(grp_gmass_img, norm=mpl.colors.Normalize(
-    vmin=np.percentile(grp_gmass_img, 36),
-    vmax=np.percentile(grp_gmass_img, 99)),
+    vmin=0,
+    vmax=np.percentile(grp_gmass_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')

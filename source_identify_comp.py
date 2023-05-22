@@ -175,8 +175,6 @@ centre = np.mean(grp_s_pos, axis=0)
 print("Got the group data with %d particles" % len(grp_los))
 
 # Compute luminosities for this group
-grp_los *= 1 / pc
-grp_los.to(1 / Mpc)
 lums = total_lum(grp_ini_masses, grp_s_mets, grp_ages, grp_los,
                  kappa=0.0795, BC_fac=1)
 
@@ -200,7 +198,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_smass_img, norm=mpl.colors.Normalize(
     vmin=0,
-    vmax=np.percentile(grp_smass_img, 99.99)),
+    vmax=np.percentile(grp_smass_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -294,7 +292,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=0,
-    vmax=np.percentile(grp_lum_img, 99.99)),
+    vmax=np.percentile(grp_lum_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -308,7 +306,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=0,
-    vmax=np.percentile(grp_lum_img, 99.99)),
+    vmax=np.percentile(grp_lum_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')
@@ -322,7 +320,7 @@ fig = plt.figure(figsize=(3.5, 3.5))
 ax = fig.add_subplot(111)
 ax.imshow(grp_lum_img, norm=mpl.colors.Normalize(
     vmin=np.percentile(grp_lum_img, 36),
-    vmax=np.percentile(grp_lum_img, 99.99)),
+    vmax=np.percentile(grp_lum_img, 99.9)),
            cmap="Greys_r"
            )
 ax.axis('off')

@@ -165,7 +165,7 @@ print("Min and max masses:", grp_s_mass.min(), grp_s_mass.max(),
       grp_ini_masses.min(), grp_ini_masses.max())
 
 # Calculate the geometric centre of the group
-centre = np.mean(grp_pos, axis=0)
+centre = np.mean(grp_s_pos, axis=0)
 
 print("Got the group data with %d particles" % len(grp_los))
 

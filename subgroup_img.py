@@ -76,7 +76,7 @@ print("Got the PSFs")
 
 for obj_id in object_ids:
 
-    n, snap, reg, group_id, subgroup_id = obj_id
+    n, snap, reg, group_id, subgroup_id = obj_id. split("_")
     snap = "_".join([n, snap])
     group_id = int(group_id)
     subgroup_id = int(subgroup_id)

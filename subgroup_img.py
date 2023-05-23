@@ -14,6 +14,7 @@ from synthesizer.particle.stars import Stars
 from synthesizer.kernel_functions import quintic
 from synthesizer.filters import FilterCollection as Filters
 from synthesizer.sed import m_to_fnu
+from synthesizer.grid import Grid
 
 import webbpsf
 from utilities import total_lum, lum_to_flux
@@ -24,6 +25,9 @@ from unyt import kpc, erg, s, Hz, Msun, Mpc, nJy, pc
 # Define the path to the data
 datapath = "/cosma7/data/dp004/dc-payy1/my_files/flares_pipeline/data/" \
     + "flares.hdf5"
+
+# Set up the grid
+grid = Grid("bc03_chabrier03_cloudy-v17.03_log10Uref-2", grid_dir="grids/")
 
 # Define the list of subgroups to image
 object_ids = ["007_z008p000_17_2_0",

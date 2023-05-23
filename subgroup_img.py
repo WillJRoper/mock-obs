@@ -25,38 +25,6 @@ from unyt import kpc, erg, s, Hz, Msun, Mpc, nJy, pc
 datapath = "/cosma7/data/dp004/dc-payy1/my_files/flares_pipeline/data/" \
     + "flares.hdf5"
 
-# Extract data from data file
-hdf = h5py.File(datapath, "r")
-reg_snap_grp = hdf[reg][snap]
-grps = reg_snap_grp["Galaxy"]["GroupNumber"][...]
-subgrps = reg_snap_grp["Galaxy"]["SubGroupNumber"][...]
-s_length = reg_snap_grp["Galaxy"]["S_Length"][...]
-s_begin = np.zeros(len(s_length), dtype=int)
-s_begin[1:] = np.cumsum(s_length[:-1])
-s_pos = reg_snap_grp["Particle"]["S_Coordinates"][...].T / (1 + z)
-s_mass = reg_snap_grp["Particle"]["S_Mass"][...] * 10 ** 10
-ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...] * 10 ** 10
-s_mets = reg_snap_grp["Particle"]["S_Z"][...]
-ages = reg_snap_grp["Particle"]["S_Age"][...] * 10 ** 3
-los = reg_snap_grp["Particle"]["S_los"][...]
-s_smls = reg_snap_grp["Particle"]["S_sml"][...]
-
-dm_length = reg_snap_grp["Galaxy"]["DM_Length"][...]
-dm_begin = np.zeros(len(dm_length), dtype=int)
-dm_begin[1:] = np.cumsum(dm_length[:-1])
-dm_pos = reg_snap_grp["Particle"]["DM_Coordinates"][...].T / (1 + z)
-
-g_length = reg_snap_grp["Galaxy"]["G_Length"][...]
-g_begin = np.zeros(len(g_length), dtype=int)
-g_begin[1:] = np.cumsum(g_length[:-1])
-g_pos = reg_snap_grp["Particle"]["G_Coordinates"][...].T / (1 + z)
-g_mass = reg_snap_grp["Particle"]["G_Mass"][...] * 10 ** 10
-g_smls = reg_snap_grp["Particle"]["G_sml"][...]
-
-hdf.close()
-
-print("Got data...")
-
 # Define the list of subgroups to image
 object_ids = ["007_z008p000_17_2_0",
               "007_z008p000_11_3_0",
@@ -110,6 +78,39 @@ for obj_id in object_ids:
     subgroup_id = int(subgroup_id)
 
     print(snap, reg, group_id, subgroup_id)
+
+    # Extract data from data file
+    hdf = h5py.File(datapath, "r")
+    reg_snap_grp = hdf[reg][snap]
+    grps = reg_snap_grp["Galaxy"]["GroupNumber"][...]
+    subgrps = reg_snap_grp["Galaxy"]["SubGroupNumber"][...]
+    s_length = reg_snap_grp["Galaxy"]["S_Length"][...]
+    s_begin = np.zeros(len(s_length), dtype=int)
+    s_begin[1:] = np.cumsum(s_length[:-1])
+    s_pos = reg_snap_grp["Particle"]["S_Coordinates"][...].T / (1 + z)
+    s_mass = reg_snap_grp["Particle"]["S_Mass"][...] * 10 ** 10
+    ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...] * 10 ** 10
+    s_mets = reg_snap_grp["Particle"]["S_Z"][...]
+    ages = reg_snap_grp["Particle"]["S_Age"][...] * 10 ** 3
+    los = reg_snap_grp["Particle"]["S_los"][...]
+    s_smls = reg_snap_grp["Particle"]["S_sml"][...]
+
+    dm_length = reg_snap_grp["Galaxy"]["DM_Length"][...]
+    dm_begin = np.zeros(len(dm_length), dtype=int)
+    dm_begin[1:] = np.cumsum(dm_length[:-1])
+    dm_pos = reg_snap_grp["Particle"]["DM_Coordinates"][...].T / (1 + z)
+
+    g_length = reg_snap_grp["Galaxy"]["G_Length"][...]
+    g_begin = np.zeros(len(g_length), dtype=int)
+    g_begin[1:] = np.cumsum(g_length[:-1])
+    g_pos = reg_snap_grp["Particle"]["G_Coordinates"][...].T / (1 + z)
+    g_mass = reg_snap_grp["Particle"]["G_Mass"][...] * 10 ** 10
+    g_smls = reg_snap_grp["Particle"]["G_sml"][...]
+
+    hdf.close()
+    
+    print("Got data...")
+
 
     # What alpha will we use?
     alpha = float(sys.argv[1])

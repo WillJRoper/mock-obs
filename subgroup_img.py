@@ -98,18 +98,13 @@ for obj_id in object_ids:
     ages = reg_snap_grp["Particle"]["S_Age"][...] * 10 ** 3
     los = reg_snap_grp["Particle"]["S_los"][...]
     s_smls = reg_snap_grp["Particle"]["S_sml"][...]
-
-    dm_length = reg_snap_grp["Galaxy"]["DM_Length"][...]
-    dm_begin = np.zeros(len(dm_length), dtype=int)
-    dm_begin[1:] = np.cumsum(dm_length[:-1])
-    dm_pos = reg_snap_grp["Particle"]["DM_Coordinates"][...].T / (1 + z)
-
-    g_length = reg_snap_grp["Galaxy"]["G_Length"][...]
-    g_begin = np.zeros(len(g_length), dtype=int)
-    g_begin[1:] = np.cumsum(g_length[:-1])
-    g_pos = reg_snap_grp["Particle"]["G_Coordinates"][...].T / (1 + z)
-    g_mass = reg_snap_grp["Particle"]["G_Mass"][...] * 10 ** 10
-    g_smls = reg_snap_grp["Particle"]["G_sml"][...]
+    
+    # g_length = reg_snap_grp["Galaxy"]["G_Length"][...]
+    # g_begin = np.zeros(len(g_length), dtype=int)
+    # g_begin[1:] = np.cumsum(g_length[:-1])
+    # g_pos = reg_snap_grp["Particle"]["G_Coordinates"][...].T / (1 + z)
+    # g_mass = reg_snap_grp["Particle"]["G_Mass"][...] * 10 ** 10
+    # g_smls = reg_snap_grp["Particle"]["G_sml"][...]
 
     hdf.close()
     
@@ -139,84 +134,21 @@ for obj_id in object_ids:
        os.makedirs("plots/subgroup_%s_%s_%d_%d" % (snap, reg, group_id, subgroup_id))
 
     # Extract this groups data
-    okinds = grps == group_id
-    grp_subgrps = subgrps[okinds]
-    grp_s_length = s_length[okinds]
-    grp_s_begin = s_begin[okinds]
-    grp_dm_length = dm_length[okinds]
-    grp_dm_begin = dm_begin[okinds]
-    grp_g_length = g_length[okinds]
-    grp_g_begin = g_begin[okinds]
+    okinds = np.logical_and(grps == group_id, subgrps == subgroup_id)
+    slength = s_length[okinds][0]
+    sstart = s_begin[okinds][0]
 
-    # And make particle arrays for this group
-    grp_s_pos = []
-    grp_dm_pos = []
-    grp_g_pos = []
-    grp_s_mass = []
-    grp_dm_mass = []
-    grp_g_mass = []
-    grp_ini_masses = []
-    grp_s_mets = []
-    grp_ages = []
-    grp_los = []
-    grp_s_smls = []
-    grp_dm_smls = []
-    grp_g_smls = []
-    subgrp_sstart = []
-    subgrp_slength = []
-    subgrp_dmstart = []
-    subgrp_dmlength = []
-    subgrp_gstart = []
-    subgrp_glength = []
-    for (ind, sstart), slength, dmstart, dmlength, gstart, glength in zip(
-            enumerate(grp_s_begin), grp_s_length,
-            grp_dm_begin, grp_dm_length,
-            grp_g_begin, grp_g_length):
+    grp_s_pos = s_pos[sstart: sstart + slength, :]
+    grp_s_mass = s_mass[sstart: sstart + slength]
+    grp_ini_masses = ini_masses[sstart: sstart + slength]
+    grp_s_mets = s_mets[sstart: sstart + slength]
+    grp_ages = ages[sstart: sstart + slength]
+    grp_los = los[sstart: sstart + slength]
+    grp_s_smls = s_smls[sstart: sstart + slength]
 
-        subgrp_sstart.append(len(grp_los))
-        subgrp_slength.append(slength)
-        subgrp_dmstart.append(len(grp_dm_mass))
-        subgrp_dmlength.append(dmlength)
-        subgrp_gstart.append(len(grp_g_mass))
-        subgrp_glength.append(glength)
-
-        grp_s_pos.extend(s_pos[sstart: sstart + slength, :])
-        grp_s_mass.extend(s_mass[sstart: sstart + slength])
-        grp_ini_masses.extend(ini_masses[sstart: sstart + slength])
-        grp_s_mets.extend(s_mets[sstart: sstart + slength])
-        grp_ages.extend(ages[sstart: sstart + slength])
-        grp_los.extend(los[sstart: sstart + slength])
-        grp_s_smls.extend(s_smls[sstart: sstart + slength])
-
-        grp_dm_pos.extend(dm_pos[dmstart: dmstart + dmlength, :])
-        grp_dm_mass.extend(np.ones(dmlength))
-        grp_dm_smls.extend(np.full(dmlength, soft))
-
-        grp_g_pos.extend(g_pos[gstart: gstart + glength, :])
-        grp_g_mass.extend(g_mass[gstart: gstart + glength])
-        grp_g_smls.extend(g_smls[gstart: gstart + glength])
-
-    grp_s_pos = np.array(grp_s_pos)
-    grp_s_mass = np.array(grp_s_mass)
-    grp_ini_masses = np.array(grp_ini_masses)
-    grp_s_mets = np.array(grp_s_mets)
-    grp_ages = np.array(grp_ages)
-    grp_los = np.array(grp_los)
-    grp_s_smls = np.array(grp_s_smls)
-    subgrp_sstart = np.array(subgrp_sstart)
-    subgrp_slength = np.array(subgrp_slength)
-
-    subgrp_dmstart = np.array(subgrp_dmstart)
-    subgrp_dmlength = np.array(subgrp_dmlength)
-    grp_dm_pos = np.array(grp_dm_pos)
-    grp_dm_mass = np.array(grp_dm_mass)
-    grp_dm_smls = np.array(grp_dm_smls)
-
-    subgrp_gstart = np.array(subgrp_gstart)
-    subgrp_glength = np.array(subgrp_glength)
-    grp_g_pos = np.array(grp_g_pos)
-    grp_g_mass = np.array(grp_g_mass)
-    grp_g_smls = np.array(grp_g_smls)
+    # grp_g_pos.extend(g_pos[gstart: gstart + glength, :])
+    # grp_g_mass.extend(g_mass[gstart: gstart + glength])
+    # grp_g_smls.extend(g_smls[gstart: gstart + glength])
 
     # Create stars object
     stars = Stars(grp_ini_masses, grp_ages, grp_s_mets,

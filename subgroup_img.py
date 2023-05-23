@@ -190,7 +190,7 @@ for obj_id in object_ids:
                cmap="Greys_r"
                )
     ax.axis('off')
-    fig.savefig("plots/%s_%s_%d_%d/stellarmass.png" % (snap, reg, group_id, subgroup_id),
+    fig.savefig("plots/subgroup_%s_%s_%d_%d/stellarmass.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100, pad_inches=0)
     plt.close()
 
@@ -211,7 +211,7 @@ for obj_id in object_ids:
     fig = plt.figure(figsize=(3.5, 3.5))
     ax = fig.add_subplot(111)
     ax.plot(int_sed.lam, int_sed._lnu)
-    fig.savefig("plots/%s_%s_%d_%d/stellar_spectra.png" % (snap, reg, group_id, subgroup_id),
+    fig.savefig("plots/subgroup_%s_%s_%d_%d/stellar_spectra.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100, pad_inches=0)
     plt.close()
 
@@ -225,7 +225,7 @@ for obj_id in object_ids:
                   )
         ax.axis('off')
         fig.savefig(
-            "plots/%s_%s_%d_%d/stellarflux_%s.png" % (snap, reg, group_id, subgroup_id, f.repalce("/", ".")),
+            "plots/subgroup_%s_%s_%d_%d/stellarflux_%s.png" % (snap, reg, group_id, subgroup_id, f.repalce("/", ".")),
                     bbox_inches="tight", dpi=100, pad_inches=0)
         plt.close()
 
@@ -237,7 +237,7 @@ for obj_id in object_ids:
                   cmap="Greys_r"
                   )
         ax.axis('off')
-        fig.savefig("plots/%s_%s_%d_%d/stellarflux_psf_%s.png" % (snap, reg, group_id, subgroup_id, f.repalce("/", ".")),
+        fig.savefig("plots/subgroup_%s_%s_%d_%d/stellarflux_psf_%s.png" % (snap, reg, group_id, subgroup_id, f.repalce("/", ".")),
                     bbox_inches="tight", dpi=100, pad_inches=0)
         plt.close()
 
@@ -249,7 +249,7 @@ for obj_id in object_ids:
                   cmap="Greys_r"
                   )
         ax.axis('off')
-        fig.savefig("plots/%s_%s_%d_%d/stellarflux_psfnoise_%s.png" % (snap, reg, group_id, subgroup_id, f.repalce("/", ".")),
+        fig.savefig("plots/subgroup_%s_%s_%d_%d/stellarflux_psfnoise_%s.png" % (snap, reg, group_id, subgroup_id, f.repalce("/", ".")),
                     bbox_inches="tight", dpi=100, pad_inches=0)
         plt.close()
 

@@ -27,7 +27,7 @@ datapath = "/cosma7/data/dp004/dc-payy1/my_files/flares_pipeline/data/" \
     + "flares.hdf5"
 
 # Set up the grid
-grid = Grid("bc03_chabrier03_cloudy-v17.03_log10Uref-2", grid_dir="grids/")
+grid = Grid("bc03_chabrier03-0.1,100", grid_dir="grids/")
 
 # Define the list of subgroups to image
 object_ids = ["007_z008p000_17_2_0",

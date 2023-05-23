@@ -58,8 +58,7 @@ filter_codes = [
     "JWST/NIRCam.F090W",
     "JWST/NIRCam.F150W",
     "JWST/NIRCam.F200W",
-    "JWST/NIRCam.F277W",
-    "JWST/MIRI.F770W"
+    "JWST/NIRCam.F277W"
 ]
 
 # Set up filter object

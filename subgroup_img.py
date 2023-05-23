@@ -83,6 +83,10 @@ for obj_id in object_ids:
 
     print(snap, reg, group_id, subgroup_id)
 
+    # Get redshift
+    z_str = snap.split('z')[1].split('p')
+    z = float(z_str[0] + '.' + z_str[1])
+
     # Extract data from data file
     hdf = h5py.File(datapath, "r")
     reg_snap_grp = hdf[reg][snap]
@@ -117,10 +121,6 @@ for obj_id in object_ids:
     # Get some image properties
     downsample = float(sys.argv[2])
     width = float(sys.argv[3])
-
-    # Get redshift
-    z_str = snap.split('z')[1].split('p')
-    z = float(z_str[0] + '.' + z_str[1])
 
     soft = 0.001802390 / (0.6777 * (1 + z)) 
 

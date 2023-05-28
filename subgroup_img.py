@@ -92,6 +92,7 @@ for obj_id in object_ids:
     reg_snap_grp = hdf[reg][snap]
     grps = reg_snap_grp["Galaxy"]["GroupNumber"][...]
     subgrps = reg_snap_grp["Galaxy"]["SubGroupNumber"][...]
+    cops = reg_snap_grp["Galaxy"]["COP"][...].T / (1 + z)
     s_length = reg_snap_grp["Galaxy"]["S_Length"][...]
     s_begin = np.zeros(len(s_length), dtype=int)
     s_begin[1:] = np.cumsum(s_length[:-1])
@@ -136,6 +137,7 @@ for obj_id in object_ids:
         continue
     slength = s_length[okinds][0]
     sstart = s_begin[okinds][0]
+    centre = cops[okinds, :][0]
 
     grp_s_pos = s_pos[sstart: sstart + slength, :]
     grp_s_mass = s_mass[sstart: sstart + slength]
@@ -184,7 +186,7 @@ for obj_id in object_ids:
     fig = plt.figure(figsize=(3.5, 3.5))
     ax = fig.add_subplot(111)
     ax.imshow(grp_smass_img, norm=mpl.colors.Normalize(
-        vmin=0,
+        vmin=grp_smass_img[grp_smass_img > 0].min() - 1,
         vmax=np.percentile(grp_smass_img, 99.9)),
                cmap="Greys_r"
                )
@@ -222,7 +224,7 @@ for obj_id in object_ids:
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
         ax.imshow(grp_lum_obj.imgs[f], norm=mpl.colors.Normalize(
-            vmin=0,
+            vmin=grp_lum_obj.imgs[f][grp_lum_obj.imgs[f] > 0].min() - 1,
             vmax=np.percentile(grp_lum_obj.imgs[f], 99.9)),
                   cmap="Greys_r"
                   )
@@ -235,7 +237,7 @@ for obj_id in object_ids:
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
         ax.imshow(grp_lum_obj.imgs_psf[f], norm=mpl.colors.Normalize(
-            vmin=0,
+            vmin=grp_lum_obj.imgs[f][grp_lum_obj.imgs_psf[f] > 0].min() - 1,
             vmax=np.percentile(grp_lum_obj.imgs_psf[f], 99.9)),
                   cmap="Greys_r"
                   )

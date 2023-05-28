@@ -13,7 +13,7 @@ from synthesizer.galaxy.particle import ParticleGalaxy as Galaxy
 from synthesizer.particle.stars import Stars
 from synthesizer.kernel_functions import quintic
 from synthesizer.filters import FilterCollection as Filters
-from synthesizer.sed import m_to_fnu
+from synthesizer.utils import m_to_fnu
 from synthesizer.grid import Grid
 
 import webbpsf
@@ -208,6 +208,7 @@ for obj_id in object_ids:
                                     rest_frame=False, cosmo=cosmo,
                                     super_resolution_factor=2)
 
+    print(int_sed.lam, int_sed._lnu)
     fig = plt.figure(figsize=(3.5, 3.5))
     ax = fig.add_subplot(111)
     ax.plot(int_sed.lam, int_sed._lnu)

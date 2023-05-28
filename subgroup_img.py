@@ -207,11 +207,13 @@ for obj_id in object_ids:
                                     rest_frame=False, cosmo=cosmo,
                                     super_resolution_factor=2)
 
-    print(int_sed.lam, int_sed._lnu)
     fig = plt.figure(figsize=(3.5, 3.5))
     ax = fig.add_subplot(111)
     ax.loglog()
     ax.plot(int_sed.lam, int_sed._lnu)
+    ax.set_ylim(10 ** 29., None)
+    ax.set_xlabel("$\lambda/ [\mu\mathrm{m}]$")
+    ax.set_ylabel("$L / [\mathrm{erg} / \mathrm{s} / \mathrm{Hz}]$")
     fig.savefig("plots/subgroup_%s_%s_%d_%d/stellar_spectra.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100, pad_inches=0)
     plt.close()

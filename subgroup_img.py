@@ -247,7 +247,7 @@ for obj_id in object_ids:
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
         ax.imshow(grp_lum_obj.imgs_noise[f], norm=mpl.colors.Normalize(
-            vmin=0,
+            vmin=--np.percentile(grp_lum_obj.imgs_noise[f], 32),
             vmax=np.percentile(grp_lum_obj.imgs_noise[f], 99.9)),
                   cmap="Greys_r"
                   )

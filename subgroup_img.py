@@ -133,6 +133,7 @@ for obj_id in object_ids:
     okinds = np.logical_and(grps == group_id, subgrps == subgroup_id)
     if len(s_length[okinds]) == 0:
         print(obj_id, "Couldn't be found")
+        continue
     slength = s_length[okinds][0]
     sstart = s_begin[okinds][0]
 

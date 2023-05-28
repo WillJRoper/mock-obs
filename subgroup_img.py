@@ -63,7 +63,7 @@ filter_codes = [
 
 # Set up filter object
 filters = Filters(filter_codes, new_lam=grid.lam)
-depths = {f: m_to_fnu(29.0) for f in filters.filter_codes}
+depths = {f: m_to_fnu(33.0) for f in filters.filter_codes}
 
 # Get the PSF
 psfs = {}
@@ -114,13 +114,9 @@ for obj_id in object_ids:
     
     print("Got data...")
 
-
-    # What alpha will we use?
-    alpha = float(sys.argv[1])
-
     # Get some image properties
-    downsample = float(sys.argv[2])
-    width = float(sys.argv[3])
+    downsample = float(sys.argv[1])
+    width = float(sys.argv[2])
 
     soft = 0.001802390 / (0.6777 * (1 + z)) 
 
@@ -135,6 +131,8 @@ for obj_id in object_ids:
 
     # Extract this groups data
     okinds = np.logical_and(grps == group_id, subgrps == subgroup_id)
+    if len(s_length[okinds]) == 0:
+        print(obj_id, "Couldn't be found")
     slength = s_length[okinds][0]
     sstart = s_begin[okinds][0]
 
@@ -211,6 +209,7 @@ for obj_id in object_ids:
     print(int_sed.lam, int_sed._lnu)
     fig = plt.figure(figsize=(3.5, 3.5))
     ax = fig.add_subplot(111)
+    ax.loglog()
     ax.plot(int_sed.lam, int_sed._lnu)
     fig.savefig("plots/subgroup_%s_%s_%d_%d/stellar_spectra.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100, pad_inches=0)

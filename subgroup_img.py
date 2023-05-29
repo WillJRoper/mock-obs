@@ -221,6 +221,9 @@ for obj_id in object_ids:
     plt.close()
 
     for f in filters.filter_codes:
+
+        print(f, np.std(grp_lum_obj.noise_arrs[f]))
+        
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
         ax.imshow(grp_lum_obj.imgs[f], norm=mpl.colors.Normalize(

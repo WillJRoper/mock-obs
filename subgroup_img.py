@@ -205,9 +205,11 @@ for obj_id in object_ids:
     # Calculate the stars SEDs
     sed = galaxy.generate_particle_spectra(grid, sed_object=True,
                                            spectra_type="total")
+    sed.get_fnu(cosmo, stars.redshift, igm=None)
     # Calculate the stars SEDs
     int_sed = galaxy.generate_spectra(grid, sed_object=True,
                                       spectra_type="total")
+    int_sed.get_fnu(cosmo, stars.redshift, igm=None)
 
     # Make the images
     grp_lum_obj = galaxy.make_image(resolution, fov=width, img_type="smoothed",

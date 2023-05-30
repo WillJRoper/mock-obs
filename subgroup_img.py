@@ -234,8 +234,8 @@ for obj_id in object_ids:
     ax.loglog()
     ax.plot(int_sed.lamz, int_sed._fnu)
     ax.set_xlabel("$\lambda/ [\mu\mathrm{m}]$")
-    ax.set_ylabel("$L / [\mathrm{erg} / \mathrm{s} / \mathrm{Hz}]$")
-    fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_luminosity.png" % (snap, reg, group_id, subgroup_id),
+    ax.set_ylabel("$L / [\mathrm{nJy}]$")
+    fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_flux.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100, pad_inches=0)
     plt.close()
 

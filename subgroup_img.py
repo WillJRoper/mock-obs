@@ -231,7 +231,10 @@ for obj_id in object_ids:
 
     for f in filters.filter_codes:
 
-        print(f, np.std(grp_lum_obj.noise_arrs[f]), grp_lum_obj.imgs[f].max())
+        print(f, np.std(grp_lum_obj.noise_arrs[f]), grp_lum_obj.imgs[f].max(),
+              grp_lum_obj.imgs[f].shape,
+              grp_lum_obj.imgs_psf[f].shape,
+              grp_lum_obj.imgs_noise[f].shape)
         
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)

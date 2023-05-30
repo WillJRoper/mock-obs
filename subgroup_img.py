@@ -229,14 +229,14 @@ for obj_id in object_ids:
     ax.plot(int_sed.lam, int_sed._lnu)
     ax.set_ylim(10 ** 30., 10**36.)
     for f in filters:
-        ax1.plot(f.lam * (1 + stars.redshift), f.t, label=f.filter_code)
+        ax1.plot(f.lam, f.t, label=f.filter_code)
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$L / [\mathrm{erg} / \mathrm{s} / \mathrm{Hz}]$")
     ax1.set_ylabel("$T$")
     ax1.set_ylim(0., 1.1)
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.1),
+        bbox_to_anchor=(0.5, -0.15),
         fancybox=True,
         shadow=True,
         ncol=3,
@@ -251,7 +251,7 @@ for obj_id in object_ids:
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
     ax1.semilogx()
-    ax.plot(int_sed.lamz, int_sed._fnu)
+    ax.plot(int_sed.lam, int_sed._fnu)
     for f in filters:
         ax1.plot(f.lam * (1 + stars.redshift), f.t, label=f.filter_code)
     ax1.set_xlabel("$\lambda/ [\AA]$")
@@ -260,7 +260,7 @@ for obj_id in object_ids:
     ax1.set_ylim(0., 1.1)
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.1),
+        bbox_to_anchor=(0.5, -0.15),
         fancybox=True,
         shadow=True,
         ncol=3,

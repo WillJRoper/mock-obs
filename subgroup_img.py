@@ -208,7 +208,7 @@ for obj_id in object_ids:
     # Make the images
     grp_lum_obj = galaxy.make_image(resolution, fov=width, img_type="smoothed",
                                     sed=sed, filters=filters, psfs=psfs, depths=depths,
-                                    snrs=5, aperture=1, kernel_func=quintic,
+                                    snrs=5, aperture=0.5, kernel_func=quintic,
                                     rest_frame=False, cosmo=cosmo,
                                     super_resolution_factor=2)
 

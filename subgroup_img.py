@@ -221,22 +221,50 @@ for obj_id in object_ids:
                                     super_resolution_factor=2)
 
     fig = plt.figure()
-    ax = fig.add_subplot(111)
+    gs = gridspec(nrows=2, ncols=1, height_ratios=[6, 3])
+    ax = fig.add_subplot(gs[0, 0])
+    ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
+    ax1.semilogx()
     ax.plot(int_sed.lam, int_sed._lnu)
-    ax.set_ylim(10 ** 30.5, None)
-    ax.set_xlabel("$\lambda/ [\AA]$")
+    ax.set_ylim(10 ** 30., 10**36.)
+    for f in filters:
+        ax1.plot(f.lam * (1 + stars.redshift), f.t, label=f.filter_code)
+    ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$L / [\mathrm{erg} / \mathrm{s} / \mathrm{Hz}]$")
+    ax1.set_ylabel("$T$")
+    ax1.set_ylim(0., 1.1)
+    ax1.legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.1),
+        fancybox=True,
+        shadow=True,
+        ncol=3,
+    )
     fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_luminosity.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100, pad_inches=0)
     plt.close()
 
     fig = plt.figure()
-    ax = fig.add_subplot(111)
+    gs = gridspec(nrows=2, ncols=1, height_ratios=[6, 3])
+    ax = fig.add_subplot(gs[0, 0])
+    ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
+    ax1.semilogx()
     ax.plot(int_sed.lamz, int_sed._fnu)
-    ax.set_xlabel("$\lambda/ [\AA]$")
-    ax.set_ylabel("$L / [\mathrm{nJy}]$")
+    for f in filters:
+        ax1.plot(f.lam * (1 + stars.redshift), f.t, label=f.filter_code)
+    ax1.set_xlabel("$\lambda/ [\AA]$")
+    ax.set_ylabel("$F / [\mathrm{nJy}]$")
+    ax1.set_ylabel("$T$")
+    ax1.set_ylim(0., 1.1)
+    ax1.legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.1),
+        fancybox=True,
+        shadow=True,
+        ncol=3,
+    )
     fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_flux.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100, pad_inches=0)
     plt.close()

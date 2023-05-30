@@ -251,7 +251,7 @@ for obj_id in object_ids:
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
     ax1.semilogx()
-    ax.plot(int_sed.lam, int_sed._fnu)
+    ax.plot(int_sed.lamz, int_sed._fnu)
     for f in filters:
         ax1.plot(f.lam * (1 + stars.redshift), f.t, label=f.filter_code)
     ax1.set_xlabel("$\lambda/ [\AA]$")

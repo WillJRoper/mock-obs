@@ -59,9 +59,12 @@ object_ids = ["007_z008p000_17_2_0",
 # Define filter list
 filter_codes = [
     "JWST/NIRCam.F090W",
+    "JWST/NIRCam.F115W",
     "JWST/NIRCam.F150W",
     "JWST/NIRCam.F200W",
-    "JWST/NIRCam.F277W"
+    "JWST/NIRCam.F277W",
+    "JWST/NIRCam.F356W",
+    "JWST/NIRCam.F444W"
 ]
 
 # Set up filter object
@@ -104,6 +107,7 @@ for obj_id in object_ids:
     ini_masses = reg_snap_grp["Particle"]["S_MassInitial"][...] * 10 ** 10
     s_mets = reg_snap_grp["Particle"]["S_Z"][...]
     ages = reg_snap_grp["Particle"]["S_Age"][...] * 10 ** 3
+    print(ages)
     los = reg_snap_grp["Particle"]["S_los"][...]
     s_smls = reg_snap_grp["Particle"]["S_sml"][...]
     
@@ -225,7 +229,7 @@ for obj_id in object_ids:
 
     for f in filters.filter_codes:
 
-        print(f, np.std(grp_lum_obj.noise_arrs[f]))
+        print(f, np.std(grp_lum_obj.noise_arrs[f]), grp_lum_obj.imgs[f].max())
         
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
@@ -264,7 +268,39 @@ for obj_id in object_ids:
                     bbox_inches="tight", dpi=100, pad_inches=0)
         plt.close()
 
+        # Also, lets make an RGB images
+        fig, ax, rgb_img = grp_lum_obj.plot_rgb_image(
+            rgb_filters={"R": ["JWST/NIRCam.F444W",],
+                         "G": ["JWST/NIRCam.F356W",],
+                         "B": ["JWST/NIRCam.F200W",]},
+            img_type="standard",
+        )
+        
+        fig.savefig(
+            "plots/subgroup_%s_%s_%d_%d/stellarflux_RGB_%s.png" % (snap, reg, group_id, subgroup_id, f.replace("/", ".")),
+                    bbox_inches="tight", dpi=300)
 
+        fig, ax, rgb_img = grp_lum_obj.plot_rgb_image(
+            rgb_filters={"R": ["JWST/NIRCam.F444W",],
+                         "G": ["JWST/NIRCam.F356W",],
+                         "B": ["JWST/NIRCam.F200W",]},
+            img_type="psf",
+        )
+        
+        fig.savefig(
+            "plots/subgroup_%s_%s_%d_%d/stellarflux_psf_RGB_%s.png" % (snap, reg, group_id, subgroup_id, f.replace("/", ".")),
+                    bbox_inches="tight", dpi=300)
+
+        fig, ax, rgb_img = grp_lum_obj.plot_rgb_image(
+            rgb_filters={"R": ["JWST/NIRCam.F444W",],
+                         "G": ["JWST/NIRCam.F356W",],
+                         "B": ["JWST/NIRCam.F200W",]},
+            img_type="noise",
+        )
+        
+        fig.savefig(
+            "plots/subgroup_%s_%s_%d_%d/stellarflux_psfnoise_RGB_%s.png" % (snap, reg, group_id, subgroup_id, f.replace("/", ".")),
+                    bbox_inches="tight", dpi=300)
 
 
     

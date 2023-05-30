@@ -221,7 +221,7 @@ for obj_id in object_ids:
                                     super_resolution_factor=2)
 
     fig = plt.figure()
-    gs = gridspec(nrows=2, ncols=1, height_ratios=[6, 3])
+    gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3])
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
@@ -246,7 +246,7 @@ for obj_id in object_ids:
     plt.close()
 
     fig = plt.figure()
-    gs = gridspec(nrows=2, ncols=1, height_ratios=[6, 3])
+    gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3])
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()

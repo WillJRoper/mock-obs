@@ -27,7 +27,10 @@ datapath = "/cosma7/data/dp004/dc-payy1/my_files/flares_pipeline/data/" \
     + "flares.hdf5"
 
 # Set up the grid
-grid = Grid("bc03_chabrier03-0.1,100", grid_dir="grids/")
+grid = Grid(
+    "bpass-2.2.1-bin_bpl-0.1,1.0,300.0-1.3,2.0_cloudy-v17.03-U_modelfixed",
+    grid_dir="grids/"
+)
 
 # Define the list of subgroups to image
 object_ids = ["007_z008p000_17_2_0",
@@ -197,10 +200,10 @@ for obj_id in object_ids:
 
     # Calculate the stars SEDs
     sed = galaxy.generate_particle_spectra(grid, sed_object=True,
-                                           spectra_type="stellar")
+                                           spectra_type="total")
     # Calculate the stars SEDs
     int_sed = galaxy.generate_spectra(grid, sed_object=True,
-                                      spectra_type="stellar")
+                                      spectra_type="total")
 
     # Make the images
     grp_lum_obj = galaxy.make_image(resolution, fov=width, img_type="smoothed",

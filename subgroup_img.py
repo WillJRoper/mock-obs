@@ -133,10 +133,6 @@ for obj_id in object_ids:
     width = width * kpc
     print("Making images with %.2f kpc resolution and a %.2f FOV" % (resolution, width))
 
-    # Make plot directory
-    if not os.path.exists("plots/subgroup_%s_%s_%d_%d" % (snap, reg, group_id, subgroup_id)):
-       os.makedirs("plots/subgroup_%s_%s_%d_%d" % (snap, reg, group_id, subgroup_id))
-
     # Extract this groups data
     okinds = np.logical_and(grps == group_id, subgrps == subgroup_id)
     if len(s_length[okinds]) == 0:
@@ -189,6 +185,10 @@ for obj_id in object_ids:
 
     print("Got Stellar Mass Image", np.min(grp_smass_img[grp_smass_img > 0]),
           np.max(grp_smass_img))
+
+    # Make plot directory
+    if not os.path.exists("plots/subgroup_%s_%s_%d_%d" % (snap, reg, group_id, subgroup_id)):
+       os.makedirs("plots/subgroup_%s_%s_%d_%d" % (snap, reg, group_id, subgroup_id))
 
     fig = plt.figure(figsize=(3.5, 3.5))
     ax = fig.add_subplot(111)

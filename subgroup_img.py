@@ -159,6 +159,8 @@ for obj_id in object_ids:
                   redshift=z, coordinates=grp_s_pos,
                   coord_units=Mpc, smoothing_lengths=grp_s_smls * Mpc)
 
+    print(stars)
+
     # Create galaxy object
     galaxy = Galaxy(stars=stars)
 

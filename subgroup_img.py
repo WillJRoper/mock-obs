@@ -58,6 +58,7 @@ object_ids = ["007_z008p000_17_2_0",
 
 # Define filter list
 filter_codes = [
+    "JWST/NIRCam.F070W",
     "JWST/NIRCam.F090W",
     "JWST/NIRCam.F115W",
     "JWST/NIRCam.F150W",

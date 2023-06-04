@@ -223,7 +223,7 @@ for obj_id in object_ids:
                                     rest_frame=False, cosmo=cosmo,
                                     super_resolution_factor=2)
 
-    fig = plt.figure(figsize=(3.5, 5))
+    fig = plt.figure(figsize=(5, 3.5))
     gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3], hspace=0.0)
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])
@@ -234,7 +234,7 @@ for obj_id in object_ids:
     for f in rest_filters:
         ax.plot(int_sed.lam, int_sed._lnu * f.t, zorder=1)
         ax1.plot(f.lam, f.t, label=f.filter_code)
-    ax.plot(int_sed.lam, int_sed._lnu, zorder=0)
+    ax.plot(int_sed.lam, int_sed._lnu, zorder=0, color="k", label="SED")
     ax.set_ylim(10 ** 30., 10**36.)
     ax.set_xlim(10 ** 2, 10 ** 7)
     ax1.set_xlim(10 ** 2, 10 ** 7)
@@ -248,9 +248,10 @@ for obj_id in object_ids:
         bottom=False,      # ticks along the bottom edge are off
         top=False,         # ticks along the top edge are off
         labelbottom=False) # labels along the bottom edge are off
+    ax.legend()
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.3),
+        bbox_to_anchor=(0.5, -0.5),
         fancybox=True,
         shadow=True,
         ncol=3,
@@ -259,7 +260,7 @@ for obj_id in object_ids:
                 bbox_inches="tight", dpi=100)
     plt.close()
 
-    fig = plt.figure(figsize=(3.5, 5))
+    fig = plt.figure(figsize=(5, 3.5))
     gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3], hspace=0.0)
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])
@@ -270,7 +271,7 @@ for obj_id in object_ids:
     for f in filters:
         ax.plot(int_sed.lamz, int_sed._fnu * f.t, zorder=1)
         ax1.plot(f.lam, f.t, label=f.filter_code)
-    ax.plot(int_sed.lamz, int_sed._fnu, zorder=0)
+    ax.plot(int_sed.lamz, int_sed._fnu, zorder=0, color="k", label="SED")
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$F / [\mathrm{nJy}]$")
     ax1.set_ylabel("$T$")
@@ -284,9 +285,10 @@ for obj_id in object_ids:
         bottom=False,      # ticks along the bottom edge are off
         top=False,         # ticks along the top edge are off
         labelbottom=False) # labels along the bottom edge are off
+    ax.legend()
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.3),
+        bbox_to_anchor=(0.5, -0.5),
         fancybox=True,
         shadow=True,
         ncol=3,

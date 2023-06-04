@@ -229,7 +229,7 @@ for obj_id in object_ids:
     ax.loglog()
     ax1.semilogx()
     ax.grid(True)
-    ax2.grid(True)
+    ax1.grid(True)
     for f in rest_filters:
         ax.plot(int_sed.lam, int_sed._lnu * f.t)
         ax1.plot(f.lam, f.t, label=f.filter_code)
@@ -257,7 +257,7 @@ for obj_id in object_ids:
     ax.loglog()
     ax1.semilogx()
     ax.grid(True)
-    ax2.grid(True)
+    ax1.grid(True)
     for f in filters:
         ax.plot(int_sed.lamz, int_sed._fnu * f.t)
         ax1.plot(f.lam, f.t, label=f.filter_code)

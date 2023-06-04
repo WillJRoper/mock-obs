@@ -73,7 +73,7 @@ depths = {f: m_to_fnu(float(sys.argv[3])) for f in rest_filters.filter_codes}
 
 # Get the PSF
 psfs = {}
-for f in filters.filter_codes:
+for f in rest_filters.filter_codes:
     nc = webbpsf.NIRCam()
     nc.filter = f.split(".")[-1]
     psfs[f] = nc.calc_psf(oversample=4)[0].data

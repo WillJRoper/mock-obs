@@ -255,7 +255,7 @@ for obj_id in object_ids:
     ax1.semilogx()
     ax.plot(int_sed.lamz, int_sed._fnu)
     for f in filters:
-        ax1.plot(f.lam * (1 + stars.redshift), f.t, label=f.filter_code)
+        ax1.plot(f.lam, f.t, label=f.filter_code)
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$F / [\mathrm{nJy}]$")
     ax1.set_ylabel("$T$")

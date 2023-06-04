@@ -251,10 +251,10 @@ for obj_id in object_ids:
     ax.legend()
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.5),
+        bbox_to_anchor=(0.5, -0.55),
         fancybox=True,
         shadow=True,
-        ncol=3,
+        ncol=2,
     )
     fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_luminosity.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100)
@@ -288,10 +288,10 @@ for obj_id in object_ids:
     ax.legend()
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.5),
+        bbox_to_anchor=(0.5, -0.55),
         fancybox=True,
         shadow=True,
-        ncol=3,
+        ncol=2,
     )
     fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_flux.png" % (snap, reg, group_id, subgroup_id),
                 bbox_inches="tight", dpi=100)
@@ -332,7 +332,7 @@ for obj_id in object_ids:
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
         ax.imshow(grp_lum_obj.imgs_noise[f], norm=mpl.colors.Normalize(
-            vmin=--np.percentile(grp_lum_obj.imgs_noise[f], 32),
+            vmin=-np.percentile(grp_lum_obj.imgs_noise[f], 32),
             vmax=np.percentile(grp_lum_obj.imgs_noise[f], 99.9)),
                   cmap="Greys_r"
                   )
@@ -350,8 +350,8 @@ for obj_id in object_ids:
     )
 
     # Set up minima and maxima
-    vmin = np.min(rgb_img)
-    vmax = np.max(rgb_img)
+    vmin = rgb_img[rgb_img > 0].min() - 1
+    vmax = np.percentile(rgb_img, 99.9)
 
     # Normalise the image.
     rgb_img = (rgb_img - vmin) / (vmax - vmin)
@@ -373,8 +373,8 @@ for obj_id in object_ids:
     )
 
     # Set up minima and maxima
-    vmin = np.min(rgb_img)
-    vmax = np.max(rgb_img)
+    vmin = rgb_img[rgb_img > 0].min() - 1
+    vmax = np.percentile(rgb_img, 99.9)
 
     # Normalise the image.
     rgb_img = (rgb_img - vmin) / (vmax - vmin)
@@ -396,8 +396,8 @@ for obj_id in object_ids:
     )
 
     # Set up minima and maxima
-    vmin = np.min(rgb_img)
-    vmax = np.max(rgb_img)
+    vmin = -np.percentile(grp_lum_obj.imgs_noise[f], 32),
+    vmax = np.percentile(rgb_img, 99.9)
 
     # Normalise the image.
     rgb_img = (rgb_img - vmin) / (vmax - vmin)

@@ -213,6 +213,8 @@ for obj_id in object_ids:
                                       spectra_type="total")
     int_sed.get_fnu(cosmo, stars.redshift, igm=None)
 
+    filters = Filters(filter_codes, new_lam=sed.lamz)
+
     # Make the images
     grp_lum_obj = galaxy.make_image(resolution, fov=width, img_type="smoothed",
                                     sed=sed, filters=filters, psfs=psfs, depths=depths,

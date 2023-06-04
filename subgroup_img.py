@@ -68,7 +68,7 @@ filter_codes = [
 ]
 
 # Set up filter object
-filters = Filters(filter_codes, new_lam=grid.lam)
+rest_filters = Filters(filter_codes, new_lam=grid.lam)
 depths = {f: m_to_fnu(float(sys.argv[3])) for f in filters.filter_codes}
 
 # Get the PSF
@@ -228,17 +228,20 @@ for obj_id in object_ids:
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
     ax1.semilogx()
+    ax.grid(True)
+    ax2.grid(True)
+    for f in rest_filters:
+        ax.plot(int_sed.lam, int_sed._lnu * f.t)
+        ax1.plot(f.lam, f.t, label=f.filter_code)
     ax.plot(int_sed.lam, int_sed._lnu)
     ax.set_ylim(10 ** 30., 10**36.)
-    for f in filters:
-        ax1.plot(f.lam, f.t, label=f.filter_code)
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$L / [\mathrm{erg} / \mathrm{s} / \mathrm{Hz}]$")
     ax1.set_ylabel("$T$")
-    ax1.set_ylim(0., 1.1)
+    ax1.set_ylim(0., 0.6)
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.15),
+        bbox_to_anchor=(0.5, -0.2),
         fancybox=True,
         shadow=True,
         ncol=3,
@@ -253,16 +256,20 @@ for obj_id in object_ids:
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
     ax1.semilogx()
-    ax.plot(int_sed.lamz, int_sed._fnu)
+    ax.grid(True)
+    ax2.grid(True)
     for f in filters:
+        ax.plot(int_sed.lamz, int_sed._fnu * f.t)
         ax1.plot(f.lam, f.t, label=f.filter_code)
+    ax.plot(int_sed.lamz, int_sed._fnu)
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$F / [\mathrm{nJy}]$")
     ax1.set_ylabel("$T$")
-    ax1.set_ylim(0., 1.1)
+    ax.set_ylim(10**-8., 10**6.9)
+    ax1.set_ylim(0., 0.6)
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.15),
+        bbox_to_anchor=(0.5, -0.2),
         fancybox=True,
         shadow=True,
         ncol=3,

@@ -223,7 +223,7 @@ for obj_id in object_ids:
                                     super_resolution_factor=2)
 
     fig = plt.figure()
-    gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3])
+    gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3], hspace=0.0)
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
@@ -231,10 +231,12 @@ for obj_id in object_ids:
     ax.grid(True)
     ax1.grid(True)
     for f in rest_filters:
-        ax.plot(int_sed.lam, int_sed._lnu * f.t)
+        ax.plot(int_sed.lam, int_sed._lnu * f.t, zorder=1)
         ax1.plot(f.lam, f.t, label=f.filter_code)
-    ax.plot(int_sed.lam, int_sed._lnu)
+    ax.plot(int_sed.lam, int_sed._lnu, zorder=0)
     ax.set_ylim(10 ** 30., 10**36.)
+    ax.set_xlim(10 ** 2, 10 ** 7)
+    ax1.set_xlim(10 ** 2, 10 ** 7)
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$L / [\mathrm{erg} / \mathrm{s} / \mathrm{Hz}]$")
     ax1.set_ylabel("$T$")
@@ -251,7 +253,7 @@ for obj_id in object_ids:
     plt.close()
 
     fig = plt.figure()
-    gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3])
+    gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3], hspace=0.0)
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])
     ax.loglog()
@@ -259,14 +261,16 @@ for obj_id in object_ids:
     ax.grid(True)
     ax1.grid(True)
     for f in filters:
-        ax.plot(int_sed.lamz, int_sed._fnu * f.t)
+        ax.plot(int_sed.lamz, int_sed._fnu * f.t, zorder=1)
         ax1.plot(f.lam, f.t, label=f.filter_code)
-    ax.plot(int_sed.lamz, int_sed._fnu)
+    ax.plot(int_sed.lamz, int_sed._fnu, zorder=0)
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$F / [\mathrm{nJy}]$")
     ax1.set_ylabel("$T$")
-    ax.set_ylim(10**-8., 10**6.9)
+    ax.set_ylim(1, None)
     ax1.set_ylim(0., 0.6)
+    ax.set_xlim(10 ** 2, 10 ** 8)
+    ax1.set_xlim(10 ** 2, 10 ** 8)
     ax1.legend(
         loc="upper center",
         bbox_to_anchor=(0.5, -0.2),

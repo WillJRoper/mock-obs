@@ -352,9 +352,11 @@ for obj_id in object_ids:
     # Set up minima and maxima
     vmin = rgb_img[rgb_img > 0].min() - 1
     vmax = np.percentile(rgb_img, 99.9)
+    print(vmin, vmax)
 
     # Normalise the image.
     rgb_img = (rgb_img - vmin) / (vmax - vmin)
+    print(rgb_img.min(), rgb_img.max())
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -375,9 +377,11 @@ for obj_id in object_ids:
     # Set up minima and maxima
     vmin = rgb_img[rgb_img > 0].min() - 1
     vmax = np.percentile(rgb_img, 99.9)
+    print(vmin, vmax)
 
     # Normalise the image.
     rgb_img = (rgb_img - vmin) / (vmax - vmin)
+    print(rgb_img.min(), rgb_img.max())
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -398,9 +402,11 @@ for obj_id in object_ids:
     # Set up minima and maxima
     vmin = -np.percentile(grp_lum_obj.imgs_noise[f], 32),
     vmax = np.percentile(rgb_img, 99.9)
+    print(vmin, vmax)
 
     # Normalise the image.
     rgb_img = (rgb_img - vmin) / (vmax - vmin)
+    print(rgb_img.min(), rgb_img.max())
 
     fig = plt.figure()
     ax = fig.add_subplot(111)

@@ -240,7 +240,13 @@ for obj_id in object_ids:
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$L / [\mathrm{erg} / \mathrm{s} / \mathrm{Hz}]$")
     ax1.set_ylabel("$T$")
-    ax1.set_ylim(0., 0.6)
+    ax1.set_ylim(0., 0.63)
+    ax.tick_params(
+        axis='x',          # changes apply to the x-axis
+        which='both',      # both major and minor ticks are affected
+        bottom=False,      # ticks along the bottom edge are off
+        top=False,         # ticks along the top edge are off
+        labelbottom=False) # labels along the bottom edge are off
     ax1.legend(
         loc="upper center",
         bbox_to_anchor=(0.5, -0.2),
@@ -268,9 +274,15 @@ for obj_id in object_ids:
     ax.set_ylabel("$F / [\mathrm{nJy}]$")
     ax1.set_ylabel("$T$")
     ax.set_ylim(1, None)
-    ax1.set_ylim(0., 0.6)
+    ax1.set_ylim(0., 0.63)
     ax.set_xlim(10 ** 2, 10 ** 8)
     ax1.set_xlim(10 ** 2, 10 ** 8)
+    ax.tick_params(
+        axis='x',          # changes apply to the x-axis
+        which='both',      # both major and minor ticks are affected
+        bottom=False,      # ticks along the bottom edge are off
+        top=False,         # ticks along the top edge are off
+        labelbottom=False) # labels along the bottom edge are off
     ax1.legend(
         loc="upper center",
         bbox_to_anchor=(0.5, -0.2),

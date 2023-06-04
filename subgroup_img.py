@@ -250,13 +250,13 @@ for obj_id in object_ids:
         labelbottom=False) # labels along the bottom edge are off
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.2),
+        bbox_to_anchor=(0.5, -0.3),
         fancybox=True,
         shadow=True,
         ncol=3,
     )
     fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_luminosity.png" % (snap, reg, group_id, subgroup_id),
-                bbox_inches="tight", dpi=100, pad_inches=0)
+                bbox_inches="tight", dpi=100)
     plt.close()
 
     fig = plt.figure(figsize=(3.5, 5))
@@ -274,7 +274,7 @@ for obj_id in object_ids:
     ax1.set_xlabel("$\lambda/ [\AA]$")
     ax.set_ylabel("$F / [\mathrm{nJy}]$")
     ax1.set_ylabel("$T$")
-    ax.set_ylim(1, None)
+    ax.set_ylim(1.1, None)
     ax1.set_ylim(0., 0.63)
     ax.set_xlim(10 ** 2, 10 ** 8)
     ax1.set_xlim(10 ** 2, 10 ** 8)
@@ -286,13 +286,13 @@ for obj_id in object_ids:
         labelbottom=False) # labels along the bottom edge are off
     ax1.legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.2),
+        bbox_to_anchor=(0.5, -0.3),
         fancybox=True,
         shadow=True,
         ncol=3,
     )
     fig.savefig("plots/subgroup_%s_%s_%d_%d/spectra_flux.png" % (snap, reg, group_id, subgroup_id),
-                bbox_inches="tight", dpi=100, pad_inches=0)
+                bbox_inches="tight", dpi=100)
     plt.close()
 
     for f in filters.filter_codes:
@@ -340,37 +340,70 @@ for obj_id in object_ids:
         plt.close()
 
     # Also, lets make an RGB images
-    fig, ax, rgb_img = grp_lum_obj.plot_rgb_image(
+    rgb_img = grp_lum_obj.make_rgb_image(
         rgb_filters={"R": ["JWST/NIRCam.F444W",],
                      "G": ["JWST/NIRCam.F356W",],
                      "B": ["JWST/NIRCam.F200W",]},
         img_type="standard",
     )
-        
+
+    # Set up minima and maxima
+    vmin = np.min(rgb_img)
+    vmax = np.max(rgb_img)
+
+    # Normalise the image.
+    rgb_img = (rgb_img - vmin) / (vmax - vmin)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.imshow(rgb_img, origin="lower", interpolation="nearest")
+    ax.axis("off")
     fig.savefig(
         "plots/subgroup_%s_%s_%d_%d/stellarflux_RGB.png" % (snap, reg, group_id, subgroup_id),
         bbox_inches="tight", dpi=300)
     plt.close()
     
-    fig, ax, rgb_img = grp_lum_obj.plot_rgb_image(
+    rgb_img = grp_lum_obj.make_rgb_image(
         rgb_filters={"R": ["JWST/NIRCam.F444W",],
                      "G": ["JWST/NIRCam.F356W",],
                      "B": ["JWST/NIRCam.F200W",]},
         img_type="psf",
     )
-    
+
+    # Set up minima and maxima
+    vmin = np.min(rgb_img)
+    vmax = np.max(rgb_img)
+
+    # Normalise the image.
+    rgb_img = (rgb_img - vmin) / (vmax - vmin)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.imshow(rgb_img, origin="lower", interpolation="nearest")
+    ax.axis("off")
     fig.savefig(
         "plots/subgroup_%s_%s_%d_%d/stellarflux_psf_RGB.png" % (snap, reg, group_id, subgroup_id),
         bbox_inches="tight", dpi=300)
     plt.close()
     
-    fig, ax, rgb_img = grp_lum_obj.plot_rgb_image(
+    rgb_img = grp_lum_obj.make_rgb_image(
         rgb_filters={"R": ["JWST/NIRCam.F444W",],
                      "G": ["JWST/NIRCam.F356W",],
                      "B": ["JWST/NIRCam.F200W",]},
         img_type="noise",
     )
-    
+
+    # Set up minima and maxima
+    vmin = np.min(rgb_img)
+    vmax = np.max(rgb_img)
+
+    # Normalise the image.
+    rgb_img = (rgb_img - vmin) / (vmax - vmin)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.imshow(rgb_img, origin="lower", interpolation="nearest")
+    ax.axis("off")
     fig.savefig(
         "plots/subgroup_%s_%s_%d_%d/stellarflux_psfnoise_RGB.png" % (snap, reg, group_id, subgroup_id),
         bbox_inches="tight", dpi=300)

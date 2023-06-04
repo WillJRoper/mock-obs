@@ -222,7 +222,7 @@ for obj_id in object_ids:
                                     rest_frame=False, cosmo=cosmo,
                                     super_resolution_factor=2)
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(3.5, 5))
     gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3], hspace=0.0)
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])
@@ -252,7 +252,7 @@ for obj_id in object_ids:
                 bbox_inches="tight", dpi=100, pad_inches=0)
     plt.close()
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(3.5, 5))
     gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3], hspace=0.0)
     ax = fig.add_subplot(gs[0, 0])
     ax1 = fig.add_subplot(gs[1, 0])

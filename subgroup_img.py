@@ -69,7 +69,7 @@ filter_codes = [
 
 # Set up filter object
 rest_filters = Filters(filter_codes, new_lam=grid.lam)
-depths = {f: m_to_fnu(float(sys.argv[3])) for f in filters.filter_codes}
+depths = {f: m_to_fnu(float(sys.argv[3])) for f in rest_filters.filter_codes}
 
 # Get the PSF
 psfs = {}

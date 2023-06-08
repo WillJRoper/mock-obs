@@ -190,7 +190,7 @@ for obj_id in object_ids:
         rest_frame=True,
         centre=centre
     )
-    grp_smass_img = grp_smass_obj.get_smoothed_img(quintic)
+    grp_smass_img = np.arcsinh(grp_smass_obj.get_smoothed_img(quintic))
 
     print("Got Stellar Mass Image", np.min(grp_smass_img[grp_smass_img > 0]),
           np.max(grp_smass_img))

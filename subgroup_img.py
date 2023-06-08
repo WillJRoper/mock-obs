@@ -78,7 +78,7 @@ psfs = {}
 for f in rest_filters.filter_codes:
     nc = webbpsf.NIRCam()
     nc.filter = f.split(".")[-1]
-    psfs[f] = nc.calc_psf(oversample=2)[0].data
+    psfs[f] = nc.calc_psf(oversample=1)[0].data
 
 print("Got the PSFs")
 

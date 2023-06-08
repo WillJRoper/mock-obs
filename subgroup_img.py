@@ -406,7 +406,7 @@ for obj_id in object_ids:
     )
 
     # Set up minima and maxima
-    vmin = -np.percentile(grp_lum_obj.imgs_noise[f], 32),
+    vmin = -np.percentile(grp_lum_obj.imgs_noise[f], 32)
     vmax = np.percentile(rgb_img, 99.9)
     norm = cm.Normalize(vmin=vmin, vmax=vmax)
 

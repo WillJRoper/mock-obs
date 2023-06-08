@@ -349,9 +349,9 @@ for obj_id in object_ids:
 
     # Also, lets make an RGB images
     rgb_img = grp_lum_obj.make_rgb_image(
-        rgb_filters={"R": ["JWST/NIRCam.F444W",],
-                     "G": ["JWST/NIRCam.F356W",],
-                     "B": ["JWST/NIRCam.F200W",]},
+        rgb_filters={"R": ["JWST/NIRCam.F356W", "JWST/NIRCam.F444W"],
+                     "G": ["JWST/NIRCam.F200W", "JWST/NIRCam.F277W"],
+                     "B": ["JWST/NIRCam.F115W", "JWST/NIRCam.F150W"]},
         img_type="standard",
     )
 
@@ -373,9 +373,9 @@ for obj_id in object_ids:
     plt.close()
     
     rgb_img = grp_lum_obj.make_rgb_image(
-        rgb_filters={"R": ["JWST/NIRCam.F444W",],
-                     "G": ["JWST/NIRCam.F356W",],
-                     "B": ["JWST/NIRCam.F200W",]},
+        rgb_filters={"R": ["JWST/NIRCam.F356W", "JWST/NIRCam.F444W"],
+                     "G": ["JWST/NIRCam.F200W", "JWST/NIRCam.F277W"],
+                     "B": ["JWST/NIRCam.F115W", "JWST/NIRCam.F150W"]},
         img_type="psf",
     )
 
@@ -397,9 +397,9 @@ for obj_id in object_ids:
     plt.close()
     
     rgb_img = grp_lum_obj.make_rgb_image(
-        rgb_filters={"R": ["JWST/NIRCam.F444W",],
-                     "G": ["JWST/NIRCam.F356W",],
-                     "B": ["JWST/NIRCam.F200W",]},
+        rgb_filters={"R": ["JWST/NIRCam.F356W", "JWST/NIRCam.F444W"],
+                     "G": ["JWST/NIRCam.F200W", "JWST/NIRCam.F277W"],
+                     "B": ["JWST/NIRCam.F115W", "JWST/NIRCam.F150W"]},
         img_type="noise",
     )
 

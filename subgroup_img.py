@@ -131,8 +131,10 @@ for obj_id in object_ids:
 
     # Define image properties
     resolution = downsample * 0.031 / cosmo.arcsec_per_kpc_proper(z).value * kpc
+    aperture = 0.16 / cosmo.arcsec_per_kpc_proper(z).value
     width = width * kpc
-    print("Making images with %.2f kpc resolution and a %.2f FOV" % (resolution, width))
+    print("Making images with %.2f kpc resolution, a %.2f kpc FOV "
+          "and a %.2f kpc aperture" % (resolution, width, aperture))
 
     # Extract this groups data
     okinds = np.logical_and(grps == group_id, subgrps == subgroup_id)
@@ -219,7 +221,7 @@ for obj_id in object_ids:
     # Make the images
     grp_lum_obj = galaxy.make_image(resolution, fov=width, img_type="smoothed",
                                     sed=sed, filters=filters, psfs=psfs, depths=depths,
-                                    snrs=5, aperture=0.5, kernel_func=quintic,
+                                    snrs=5, aperture=aperture, kernel_func=quintic,
                                     rest_frame=False, cosmo=cosmo,
                                     super_resolution_factor=2)
 

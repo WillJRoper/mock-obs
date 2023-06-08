@@ -211,8 +211,8 @@ for obj_id in object_ids:
     filters = Filters(filter_codes, new_lam=sed.lamz)
 
     # Get the PSF
-    arcsec_fov = (width.value / cosmo.arcsec_per_kpc_proper(z).value,
-                  width.value / cosmo.arcsec_per_kpc_proper(z).value)
+    arcsec_fov = (width.value * cosmo.arcsec_per_kpc_proper(z).value,
+                  width.value * cosmo.arcsec_per_kpc_proper(z).value)
     psfs = {}
     for f in rest_filters.filter_codes:
         nc = webbpsf.NIRCam()

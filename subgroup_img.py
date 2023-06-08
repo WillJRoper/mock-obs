@@ -211,7 +211,8 @@ for obj_id in object_ids:
     filters = Filters(filter_codes, new_lam=sed.lamz)
 
     # Get the PSF
-    arcsec_fov = width / cosmo.arcsec_per_kpc_proper(z).value
+    arcsec_fov = (width.value / cosmo.arcsec_per_kpc_proper(z).value,
+                  width.value / cosmo.arcsec_per_kpc_proper(z).value)
     psfs = {}
     for f in rest_filters.filter_codes:
         nc = webbpsf.NIRCam()
@@ -381,7 +382,7 @@ for obj_id in object_ids:
     # Set up minima and maxima
     vmin = rgb_img[rgb_img > 0].min() - 1
     vmax = np.percentile(rgb_img, 99.9)
-    norm = cm.Normalize(vmin=vmin, vmax=vmax)
+    norm = cm.Normalize(vmin=vmin, vmax=vmax, clip=True)
 
     # Normalise the image.
     rgb_img = norm(rgb_img)
@@ -405,7 +406,7 @@ for obj_id in object_ids:
     # Set up minima and maxima
     vmin = -np.percentile(grp_lum_obj.imgs_noise[f], 32)
     vmax = np.percentile(rgb_img, 99.9)
-    norm = cm.Normalize(vmin=vmin, vmax=vmax)
+    norm = cm.Normalize(vmin=vmin, vmax=vmax, clip=True)
 
     # Normalise the image.
     rgb_img = norm(rgb_img)

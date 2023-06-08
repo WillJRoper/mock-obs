@@ -312,7 +312,7 @@ for obj_id in object_ids:
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
         ax.imshow(grp_lum_obj.imgs[f], norm=mpl.colors.Normalize(
-            vmin=grp_lum_obj.imgs[f][grp_lum_obj.imgs[f] > 0].min() - 1,
+            vmin=0,
             vmax=np.percentile(grp_lum_obj.imgs[f], 99.9)),
                   cmap="Greys_r"
                   )
@@ -325,7 +325,7 @@ for obj_id in object_ids:
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
         ax.imshow(grp_lum_obj.imgs_psf[f], norm=mpl.colors.Normalize(
-            vmin=grp_lum_obj.imgs_psf[f][grp_lum_obj.imgs_psf[f] > 0].min() - 1,
+            vmin=0,
             vmax=np.percentile(grp_lum_obj.imgs_psf[f], 99.9)),
                   cmap="Greys_r"
                   )
@@ -357,7 +357,7 @@ for obj_id in object_ids:
     # Set up minima and maxima
     vmin = rgb_img[rgb_img > 0].min() - 1
     vmax = np.percentile(rgb_img, 99.9)
-    norm = cm.Normalize(vmin=vmin, vmax=vmax)
+    norm = cm.Normalize(vmin=vmin, vmax=vmax, clip=True)
 
     # Normalise the image.
     rgb_img = norm(rgb_img)

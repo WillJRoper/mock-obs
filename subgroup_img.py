@@ -6,6 +6,7 @@ from astropy.cosmology import Planck18 as cosmo
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.colors as cm
 import matplotlib.gridspec as gridspec
 
 from synthesizer.imaging.images import ParticleImage
@@ -225,6 +226,13 @@ for obj_id in object_ids:
                                     rest_frame=False, cosmo=cosmo,
                                     super_resolution_factor=2)
 
+    # Apply arcsinh scaling to images (will be internal to Synthesizer soon)
+    for f in filters.filter_codes:
+        grp_lum_obj.imgs[f] = np.arcsinh(grp_lum_obj.imgs[f])
+        grp_lum_obj.imgs_psf[f] = np.arcsinh(grp_lum_obj.imgs_psf[f])
+        grp_lum_obj.imgs_noise[f] = np.arcsinh(grp_lum_obj.imgs_noise[f])
+        
+
     fig = plt.figure(figsize=(5, 3.5))
     gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[6, 3], hspace=0.0)
     ax = fig.add_subplot(gs[0, 0])
@@ -300,11 +308,6 @@ for obj_id in object_ids:
     plt.close()
 
     for f in filters.filter_codes:
-
-        print(f, np.std(grp_lum_obj.noise_arrs[f]), grp_lum_obj.imgs[f].max(),
-              grp_lum_obj.imgs[f].shape,
-              grp_lum_obj.imgs_psf[f].shape,
-              grp_lum_obj.imgs_noise[f].shape)
         
         fig = plt.figure(figsize=(3.5, 3.5))
         ax = fig.add_subplot(111)
@@ -351,16 +354,13 @@ for obj_id in object_ids:
         img_type="standard",
     )
 
-    rgb_img = np.arcsinh(rgb_img)
-
     # Set up minima and maxima
     vmin = rgb_img[rgb_img > 0].min() - 1
     vmax = np.percentile(rgb_img, 99.9)
-    print(vmin, vmax)
+    norm = cm.Normalize(vmin=vmin, vmax=vmax)
 
     # Normalise the image.
-    rgb_img = (rgb_img - vmin) / (vmax - vmin)
-    print(rgb_img.min(), rgb_img.max())
+    rgb_img = norm(rgb_img)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -378,16 +378,13 @@ for obj_id in object_ids:
         img_type="psf",
     )
 
-    rgb_img = np.arcsinh(rgb_img)
-
     # Set up minima and maxima
     vmin = rgb_img[rgb_img > 0].min() - 1
     vmax = np.percentile(rgb_img, 99.9)
-    print(vmin, vmax)
+    norm = cm.Normalize(vmin=vmin, vmax=vmax)
 
     # Normalise the image.
-    rgb_img = (rgb_img - vmin) / (vmax - vmin)
-    print(rgb_img.min(), rgb_img.max())
+    rgb_img = norm(rgb_img)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -405,16 +402,13 @@ for obj_id in object_ids:
         img_type="noise",
     )
 
-    rgb_img = np.arcsinh(rgb_img)
-
     # Set up minima and maxima
     vmin = -np.percentile(grp_lum_obj.imgs_noise[f], 32),
     vmax = np.percentile(rgb_img, 99.9)
-    print(vmin, vmax)
+    norm = cm.Normalize(vmin=vmin, vmax=vmax)
 
     # Normalise the image.
-    rgb_img = (rgb_img - vmin) / (vmax - vmin)
-    print(rgb_img.min(), rgb_img.max())
+    rgb_img = norm(rgb_img)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)

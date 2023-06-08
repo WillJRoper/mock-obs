@@ -72,16 +72,7 @@ filter_codes = [
 # Set up filter object
 rest_filters = Filters(filter_codes, new_lam=grid.lam)
 depths = {f: m_to_fnu(float(sys.argv[3])) for f in rest_filters.filter_codes}
-
-# Get the PSF
-psfs = {}
-for f in rest_filters.filter_codes:
-    nc = webbpsf.NIRCam()
-    nc.filter = f.split(".")[-1]
-    psfs[f] = nc.calc_psf(oversample=1)[0].data
-
-print("Got the PSFs")
-
+    
 for obj_id in object_ids:
 
     n, snap, reg, group_id, subgroup_id = obj_id. split("_")
@@ -218,6 +209,15 @@ for obj_id in object_ids:
     int_sed.get_fnu(cosmo, stars.redshift, igm=None)
 
     filters = Filters(filter_codes, new_lam=sed.lamz)
+
+    # Get the PSF
+    arcsec_fov = width / cosmo.arcsec_per_kpc_proper(z).value
+    psfs = {}
+    for f in rest_filters.filter_codes:
+        nc = webbpsf.NIRCam()
+        nc.filter = f.split(".")[-1]
+        psfs[f] = nc.calc_psf(oversample=1,
+                              fov_arcsec=arcsec_fov)[0].data
 
     # Make the images
     grp_lum_obj = galaxy.make_image(resolution, fov=width, img_type="smoothed",
